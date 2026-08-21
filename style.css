@@ -810,3 +810,17 @@ color: #9F3A38;
         padding: 5px 10px;
     }
 }
+
+.importantOption input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    min-height: 0;
+    margin: 0 8px 0 0;
+    padding: 0;
+    box-shadow: none;
+}
+
+.importantOption label {
+    display: flex;
+    align-items: center;
+}
