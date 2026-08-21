@@ -1,14 +1,19 @@
 {
   "name": "Huishouden ToDo",
   "short_name": "Huishouden ToDo",
-  "start_url": "/Huishouden-ToDo/",
-  "scope": "/Huishouden-ToDo/",
+  "start_url": "/Huishouden_ToDo/",
+  "scope": "/Huishouden_ToDo/",
   "display": "standalone",
   "background_color": "#f7fbfc",
   "theme_color": "#3f5f6b",
   "icons": [
     {
-      "src": "images/app-icon.png",
+      "src": "images/app_icon_192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "images/app_icon.png",
       "sizes": "512x512",
       "type": "image/png"
     }
