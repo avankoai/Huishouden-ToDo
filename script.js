@@ -851,3 +851,20 @@ function subscribeToTaskChanges() {
         .subscribe();
 
 }
+
+if ("serviceWorker" in navigator) {
+
+    window.addEventListener("load", function() {
+
+        navigator.serviceWorker
+            .register("./service_worker.js")
+            .then(function(registration) {
+                console.log("Service Worker actief:", registration.scope);
+            })
+            .catch(function(error) {
+                console.error("Service Worker fout:", error);
+            });
+
+    });
+
+} 

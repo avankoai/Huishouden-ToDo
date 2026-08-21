@@ -6,8 +6,8 @@ const APP_FILES = [
     "./style.css",
     "./script.js",
     "./manifest.json",
-    "./images/app-icon.png",
-    "./images/app-icon-192.png",
+    "./images/app_icon.png",
+    "./images/app_icon_192.png",
     "./images/background_pattern.png"
 ];
 
@@ -60,20 +60,3 @@ self.addEventListener("fetch", function(event) {
     );
 
 });
-
-if ("serviceWorker" in navigator) {
-
-    window.addEventListener("load", function() {
-
-        navigator.serviceWorker
-            .register("./service_worker.js")
-            .then(function(registration) {
-                console.log("Service Worker actief:", registration.scope);
-            })
-            .catch(function(error) {
-                console.error("Service Worker fout:", error);
-            });
-
-    });
-
-}
