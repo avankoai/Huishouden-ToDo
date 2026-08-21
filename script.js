@@ -137,37 +137,72 @@ if (currentDayStatus === "afgerond") {
 }
 
 
-checkbox.addEventListener("change", function() {
+checkbox.addEventListener("change", async function() {
 
     let dayName = task.dag.toLowerCase();
 
-
-    // Zorg dat dagStatus bestaat
     if (!task.dagStatus) {
-
         task.dagStatus = {};
+    }
+
+    if (checkbox.checked) {
+
+        task.dagStatus[task.dag] = "afgerond";
+
+    } else {
+
+        task.dagStatus[task.dag] = "open";
 
     }
 
 
+    // Ook het originele task-object in de tasks-array bijwerken
+    let originalTask = tasks.find(function(item) {
+        return item.id === task.id;
+    });
+
+    if (originalTask) {
+        originalTask.dagStatus = {
+            ...originalTask.dagStatus,
+            [task.dag]: task.dagStatus[task.dag]
+        };
+    }
+
+
+    // Nieuwe status naar Supabase sturen
+    const { error } = await supabaseClient
+        .from("tasks")
+        .update({
+            dag_status: originalTask
+                ? originalTask.dagStatus
+                : task.dagStatus
+        })
+        .eq("id", task.id);
+
+
+    if (error) {
+
+        console.error("Status bijwerken mislukt:", error);
+
+        // Checkbox terugzetten als opslaan mislukt
+        checkbox.checked = !checkbox.checked;
+
+        return;
+    }
+
+
+    // Kaart naar juiste gedeelte verplaatsen
     if (checkbox.checked) {
 
         li.classList.add("completed");
-
-        task.dagStatus[task.dag] = "afgerond";
-
 
         document
             .getElementById(dayName + "-done")
             .appendChild(li);
 
-
     } else {
 
         li.classList.remove("completed");
-
-        task.dagStatus[task.dag] = "open";
-
 
         document
             .getElementById(dayName + "-open")
@@ -176,13 +211,10 @@ checkbox.addEventListener("change", function() {
     }
 
 
-    localStorage.setItem(
-        "tasks",
-        JSON.stringify(tasks)
-    );
-
-
     updateCompletedCount(dayName);
+
+    // Vandaag-overzicht opnieuw opbouwen
+    loadTodayOverview();
 
 });
 
