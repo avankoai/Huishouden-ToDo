@@ -1,61 +1,102 @@
+const SUPABASE_URL = "https://sbppjnbilqhriyburalx.supabase.co";
+const SUPABASE_KEY = "sb_publishable_LTMhwEaoBcgn_DVnLbNmQA_3AVsrDDK";
+
+const supabaseClient = supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
 let tasks = [];
 
-function addTask() {
+function dbRowToTask(row) {
+    return {
+        id: row.id,
+        naam: row.naam,
+        persoon: row.persoon,
+        belangrijk: row.belangrijk,
+        dag: row.dag,
+        herhaling: row.herhaling,
+        notitie: row.notitie || "",
+        dagStatus: row.dag_status || {}
+    };
+}
+
+function taskToDb(task) {
+    return {
+        naam: task.naam,
+        persoon: task.persoon,
+        belangrijk: task.belangrijk,
+        dag: task.dag,
+        herhaling: task.herhaling,
+        notitie: task.notitie,
+        dag_status: task.dagStatus || {}
+    };
+}
+
+async function addTask() {
 
     let input = document.getElementById("taskInput");
     let taskText = input.value;
 
     let person = document.getElementById("personInput").value;
-let important = document.getElementById("importantInput").checked;
+    let important = document.getElementById("importantInput").checked;
     let note = document.getElementById("noteInput").value;
-let day = document.getElementById("dayInput").value;
+    let day = document.getElementById("dayInput").value;
+    let repeat = document.getElementById("repeatInput").value;
 
+    if (day === "Vandaag") {
 
-if (day === "Vandaag") {
+        day = getTodayName();
 
-    day = getTodayName();
-
-    day =
-    day.charAt(0).toUpperCase() +
-    day.slice(1);
-
-}
-
-let repeat = document.getElementById("repeatInput").value;
+        day =
+            day.charAt(0).toUpperCase() +
+            day.slice(1);
+    }
 
     if (taskText === "") {
         return;
     }
 
-let task = {
-    naam: taskText,
-    persoon: person,
-    belangrijk: important,
-    dag: day,
-    herhaling: repeat,
-    notitie: note,
-    status: "open",
-    dagStatus: {}
-};
+    let newTask = {
+        naam: taskText,
+        persoon: person,
+        belangrijk: important,
+        dag: day,
+        herhaling: repeat,
+        notitie: note,
+        dagStatus: {}
+    };
 
-tasks.push(task);
+    const { data, error } = await supabaseClient
+        .from("tasks")
+        .insert(taskToDb(newTask))
+        .select()
+        .single();
 
-localStorage.setItem("tasks", JSON.stringify(tasks));
+    if (error) {
+        console.error("Taak opslaan mislukt:", error);
+        return;
+    }
 
+    let task = dbRowToTask(data);
 
-let days = getTaskDays(task);
+    tasks.push(task);
 
+    let days = getTaskDays(task);
 
-days.forEach(function(day) {
+    days.forEach(function(day) {
 
-    createTask({
-        ...task,
-        dag: day
+        createTask({
+            ...task,
+            dag: day
+        });
+
     });
 
-});
-
     input.value = "";
+
+    document.getElementById("noteInput").value = "";
+    document.getElementById("importantInput").checked = false;
     document.getElementById("taskForm").style.display = "none";
 
     loadTodayOverview();
@@ -272,62 +313,56 @@ else {
 }
 
 
-function loadTasks() {
+async function loadTasks() {
 
-    let savedTasks = localStorage.getItem("tasks");
+    const { data, error } = await supabaseClient
+        .from("tasks")
+        .select("*")
+        .order("created_at", { ascending: true });
 
-    if (savedTasks) {
-
-        tasks = JSON.parse(savedTasks);
-
-
-        tasks.forEach(function(task) {
-
-            if (!task.dagStatus) {
-                task.dagStatus = {};
-            }
-
-
-            let days = getTaskDays(task);
-
-
-            days.forEach(function(day) {
-
-                createTask({
-                    ...task,
-                    dag: day
-                });
-
-            });
-
-        });
-
-
-        tasks.forEach(function(task) {
-
-            let days = getTaskDays(task);
-
-            days.forEach(function(day) {
-
-                updateCompletedCount(day.toLowerCase());
-
-            });
-
-        });
-
+    if (error) {
+        console.error("Taken laden mislukt:", error);
+        return;
     }
 
+    tasks = data.map(dbRowToTask);
+
+    tasks.forEach(function(task) {
+
+        let days = getTaskDays(task);
+
+        days.forEach(function(day) {
+
+            createTask({
+                ...task,
+                dag: day
+            });
+
+        });
+
+    });
+
+    tasks.forEach(function(task) {
+
+        let days = getTaskDays(task);
+
+        days.forEach(function(day) {
+            updateCompletedCount(day.toLowerCase());
+        });
+
+    });
 }
 
-checkWeeklyReset();
+async function initializeApp() {
 
-loadTasks();
+    await loadTasks();
 
-loadDayStates();
+    loadDayStates();
+    highlightToday();
+    loadTodayOverview();
+}
 
-highlightToday();
-
-loadTodayOverview();
+initializeApp();
 
 
 function goToToday() {
@@ -671,6 +706,7 @@ function loadTodayOverview() {
 
     let container = document.getElementById("todayTasks");
 
+
     container.innerHTML = "";
 
 
@@ -717,3 +753,4 @@ foundTasks.forEach(function(task) {
 });
 
 }
+
