@@ -370,6 +370,8 @@ async function initializeApp() {
     loadDayStates();
     highlightToday();
     loadTodayOverview();
+
+    subscribeToTaskChanges();
 }
 
 initializeApp();
@@ -807,4 +809,43 @@ function renderAllTasks() {
 
     // Vandaag opnieuw opbouwen
     loadTodayOverview();
+}
+
+async function refreshTasksFromSupabase() {
+
+    const { data, error } = await supabaseClient
+        .from("tasks")
+        .select("*")
+        .order("created_at", { ascending: true });
+
+    if (error) {
+        console.error("Realtime vernieuwen mislukt:", error);
+        return;
+    }
+
+    tasks = data.map(dbRowToTask);
+
+    renderAllTasks();
+
+}
+
+function subscribeToTaskChanges() {
+
+    supabaseClient
+        .channel("tasks-realtime")
+        .on(
+            "postgres_changes",
+            {
+                event: "*",
+                schema: "public",
+                table: "tasks"
+            },
+            async function() {
+
+                await refreshTasksFromSupabase();
+
+            }
+        )
+        .subscribe();
+
 }
