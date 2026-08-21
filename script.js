@@ -7,6 +7,7 @@ const supabaseClient = supabase.createClient(
 );
 
 let tasks = [];
+let deleteTaskTarget = null;
 
 function dbRowToTask(row) {
     return {
@@ -253,23 +254,13 @@ deleteButton.innerText = "×";
 deleteButton.className = "deleteButton";
 
 
-deleteButton.addEventListener("click", async function() {
+deleteButton.addEventListener("click", function() {
 
-    const { error } = await supabaseClient
-        .from("tasks")
-        .delete()
-        .eq("id", task.id);
+    deleteTaskTarget = task;
 
-    if (error) {
-        console.error("Taak verwijderen mislukt:", error);
-        return;
-    }
-
-    tasks = tasks.filter(function(item) {
-        return item.id !== task.id;
-    });
-
-    renderAllTasks();
+    document
+        .getElementById("deleteModal")
+        .style.display = "flex";
 
 });
 
@@ -868,3 +859,59 @@ if ("serviceWorker" in navigator) {
     });
 
 } 
+
+document
+.getElementById("cancelDelete")
+.addEventListener("click", function() {
+
+    deleteTaskTarget = null;
+
+    document.getElementById("deleteModal").style.display = "none";
+
+});
+
+
+document
+.getElementById("confirmDelete")
+.addEventListener("click", async function() {
+
+
+    if (!deleteTaskTarget) {
+        return;
+    }
+
+
+    const { error } = await supabaseClient
+        .from("tasks")
+        .delete()
+        .eq("id", deleteTaskTarget.id);
+
+
+    if (error) {
+
+        console.error(
+            "Taak verwijderen mislukt:",
+            error
+        );
+
+        return;
+
+    }
+
+
+    tasks = tasks.filter(function(item) {
+
+        return item.id !== deleteTaskTarget.id;
+
+    });
+
+
+    deleteTaskTarget = null;
+
+
+    document.getElementById("deleteModal").style.display = "none";
+
+
+    renderAllTasks();
+
+});
