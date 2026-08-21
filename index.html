@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Huishouden ToDo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<h1>Huishouden ToDo</h1>
+<p class="subtitle">
+    Samen georganiseerd, zonder gedoe
+</p>
+
+<div class="todayOverview">
+
+    <h2>
+        Vandaag
+    </h2>
+
+    <div id="todayTasks"></div>
+
+</div>
+
+<button class="newTaskButton" onclick="toggleTaskForm()">
+    + Nieuwe taak
+</button>
+
+<div id="taskForm" class="taskForm">
+
+<input id="taskInput" placeholder="Nieuwe taak...">
+
+<select id="personInput">
+
+<option value="Anthony">Anthony</option>
+<option value="Danique">Danique</option>
+<option value="Samen">Samen</option>
+
+</select>
+
+
+<textarea id="noteInput" placeholder="Notitie of instructies..."></textarea>
+
+
+<div class="importantOption">
+
+    <label>
+        <input type="checkbox" id="importantInput">
+        Belangrijke taak
+    </label>
+
+</div>
+
+<select id="repeatInput">
+
+<option value="eenmalig">Eenmalig</option>
+<option value="dagelijks">Dagelijks</option>
+<option value="wekelijks">Wekelijks</option>
+
+</select>
+
+<div id="dayContainer">
+    
+<select id="dayInput">
+
+<option value="Vandaag">Vandaag</option>
+<option value="Maandag">Maandag</option>
+<option value="Dinsdag">Dinsdag</option>
+<option value="Woensdag">Woensdag</option>
+<option value="Donderdag">Donderdag</option>
+<option value="Vrijdag">Vrijdag</option>
+<option value="Zaterdag">Zaterdag</option>
+<option value="Zondag">Zondag</option>
+
+</select>
+
+</div>
+
+<button class="addTaskButton" onclick="addTask()">
+    Toevoegen
+</button>
+
+</div>
+
+<div class="week">
+
+    <section class="day">
+
+<h2 onclick="toggleDay('maandag')" id="maandag-title">
+    ▼ Maandag
+</h2>
+
+<div id="maandag-content">
+
+    <div class="openTasks">
+
+        <ul id="maandag-open"></ul>
+
+    </div>
+
+
+    <div class="completedTasks">
+
+        <h3 id="maandag-done-title" onclick="toggleCompleted('maandag')">
+            ▶ Afgerond (0)
+        </h3>
+
+        <ul id="maandag-done" style="display:none;"></ul>
+
+    </div>
+
+</div> 
+
+</section>
+
+<section class="day">
+
+    <h2 onclick="toggleDay('dinsdag')" id="dinsdag-title">
+        ▼ Dinsdag
+    </h2>
+
+    <div id="dinsdag-content">
+
+        <div class="openTasks">
+            <ul id="dinsdag-open"></ul>
+        </div>
+
+
+        <div class="completedTasks">
+
+            <h3 id="dinsdag-done-title" onclick="toggleCompleted('dinsdag')">
+                ▶ Afgerond (0)
+            </h3>
+
+            <ul id="dinsdag-done" style="display:none;"></ul>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="day">
+
+    <h2 onclick="toggleDay('woensdag')" id="woensdag-title">
+        ▼ Woensdag
+    </h2>
+
+    <div id="woensdag-content">
+
+        <div class="openTasks">
+            <ul id="woensdag-open"></ul>
+        </div>
+
+        <div class="completedTasks">
+
+            <h3 id="woensdag-done-title" onclick="toggleCompleted('woensdag')">
+                ▶ Afgerond (0)
+            </h3>
+
+            <ul id="woensdag-done" style="display:none;"></ul>
+
+        </div>
+
+    </div>
+
+</section>
+
+ <section class="day">
+
+<h2 onclick="toggleDay('donderdag')" id="donderdag-title">
+    ▼ Donderdag
+</h2>
+
+    <div id="donderdag-content">
+
+        <div class="openTasks">
+
+            <ul id="donderdag-open"></ul>
+
+        </div>
+
+
+        <div class="completedTasks">
+
+            <h3 id="donderdag-done-title" onclick="toggleCompleted('donderdag')">
+                ▶ Afgerond (0)
+            </h3>
+
+            <ul id="donderdag-done" style="display:none;"></ul>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="day">
+
+    <h2 onclick="toggleDay('vrijdag')" id="vrijdag-title">
+        ▼ Vrijdag
+    </h2>
+
+    <div id="vrijdag-content">
+
+        <div class="openTasks">
+
+            <ul id="vrijdag-open"></ul>
+
+        </div>
+
+
+        <div class="completedTasks">
+
+            <h3 id="vrijdag-done-title" onclick="toggleCompleted('vrijdag')">
+                ▶ Afgerond (0)
+            </h3>
+
+            <ul id="vrijdag-done" style="display:none;"></ul>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="day">
+
+    <h2 onclick="toggleDay('zaterdag')" id="zaterdag-title">
+        ▼ Zaterdag
+    </h2>
+
+    <div id="zaterdag-content">
+
+        <div class="openTasks">
+
+            <ul id="zaterdag-open"></ul>
+
+        </div>
+
+
+        <div class="completedTasks">
+
+            <h3 id="zaterdag-done-title" onclick="toggleCompleted('zaterdag')">
+                ▶ Afgerond (0)
+            </h3>
+
+            <ul id="zaterdag-done" style="display:none;"></ul>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="day">
+
+    <h2 onclick="toggleDay('zondag')" id="zondag-title">
+        ▼ Zondag
+    </h2>
+
+    <div id="zondag-content">
+
+        <div class="openTasks">
+
+            <ul id="zondag-open"></ul>
+
+        </div>
+
+
+        <div class="completedTasks">
+
+            <h3 id="zondag-done-title" onclick="toggleCompleted('zondag')">
+                ▶ Afgerond (0)
+            </h3>
+
+            <ul id="zondag-done" style="display:none;"></ul>
+
+        </div>
+
+    </div>
+
+</section>
+
+</div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
