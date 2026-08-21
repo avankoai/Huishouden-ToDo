@@ -1,8 +1,8 @@
 {
   "name": "Huishouden ToDo",
   "short_name": "Huishouden ToDo",
-"start_url": "./",
-"scope": "./",
+  "start_url": "/Huishouden-ToDo/",
+  "scope": "/Huishouden-ToDo/",
   "display": "standalone",
   "background_color": "#f7fbfc",
   "theme_color": "#3f5f6b",
