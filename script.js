@@ -276,23 +276,32 @@ deleteButton.innerText = "×";
 deleteButton.className = "deleteButton";
 
 
-deleteButton.addEventListener("click", function() {
+deleteButton.addEventListener("click", async function() {
 
-    li.remove();
+    const { error } = await supabaseClient
+        .from("tasks")
+        .delete()
+        .eq("id", task.id);
 
+    if (error) {
+        console.error("Taak verwijderen mislukt:", error);
+        return;
+    }
+
+    // Verwijder de taak uit onze lokale JavaScript-array
     tasks = tasks.filter(function(item) {
-        return item !== task;
+        return item.id !== task.id;
     });
 
-    localStorage.setItem("tasks", JSON.stringify(tasks));
+    // Verwijder de kaart uit beeld
+    li.remove();
 
-
-    // Teller afgeronde taken bijwerken
-if (task.status === "afgerond") {
-
+    // Teller opnieuw berekenen
     updateCompletedCount(task.dag.toLowerCase());
 
-}
+    // Vandaag-overzicht opnieuw opbouwen
+    loadTodayOverview();
+
 });
 
 
