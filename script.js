@@ -191,30 +191,7 @@ checkbox.addEventListener("change", async function() {
     }
 
 
-    // Kaart naar juiste gedeelte verplaatsen
-    if (checkbox.checked) {
-
-        li.classList.add("completed");
-
-        document
-            .getElementById(dayName + "-done")
-            .appendChild(li);
-
-    } else {
-
-        li.classList.remove("completed");
-
-        document
-            .getElementById(dayName + "-open")
-            .appendChild(li);
-
-    }
-
-
-    updateCompletedCount(dayName);
-
-    // Vandaag-overzicht opnieuw opbouwen
-    loadTodayOverview();
+renderAllTasks();
 
 });
 
@@ -288,19 +265,11 @@ deleteButton.addEventListener("click", async function() {
         return;
     }
 
-    // Verwijder de taak uit onze lokale JavaScript-array
     tasks = tasks.filter(function(item) {
         return item.id !== task.id;
     });
 
-    // Verwijder de kaart uit beeld
-    li.remove();
-
-    // Teller opnieuw berekenen
-    updateCompletedCount(task.dag.toLowerCase());
-
-    // Vandaag-overzicht opnieuw opbouwen
-    loadTodayOverview();
+    renderAllTasks();
 
 });
 
@@ -795,3 +764,47 @@ foundTasks.forEach(function(task) {
 
 }
 
+function renderAllTasks() {
+
+    let days = [
+        "maandag",
+        "dinsdag",
+        "woensdag",
+        "donderdag",
+        "vrijdag",
+        "zaterdag",
+        "zondag"
+    ];
+
+    // Alle bestaande kaarten verwijderen
+    days.forEach(function(day) {
+
+        document.getElementById(day + "-open").innerHTML = "";
+        document.getElementById(day + "-done").innerHTML = "";
+
+    });
+
+    // Taken opnieuw in de week zetten
+    tasks.forEach(function(task) {
+
+        let taskDays = getTaskDays(task);
+
+        taskDays.forEach(function(day) {
+
+            createTask({
+                ...task,
+                dag: day
+            });
+
+        });
+
+    });
+
+    // Afgerond-tellers opnieuw berekenen
+    days.forEach(function(day) {
+        updateCompletedCount(day);
+    });
+
+    // Vandaag opnieuw opbouwen
+    loadTodayOverview();
+}

@@ -661,6 +661,8 @@ color: #9F3A38;
 }
 
 .todayOverview li {
+    position: relative;
+
     list-style: none;
     background-color: white;
     padding: 12px 40px 12px 14px;
