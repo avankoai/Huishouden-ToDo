@@ -669,3 +669,144 @@ color: #9F3A38;
     box-shadow: 0 3px 10px rgba(0,0,0,0.05);
     border-left-width: 5px;
 }
+
+/* ========================================
+   MOBIELE WEERGAVE
+   ======================================== */
+
+@media (max-width: 600px) {
+
+    /* Pagina breder gebruiken */
+    body {
+        max-width: none;
+        width: auto;
+        margin: 0;
+        padding: 18px 14px 30px;
+    }
+
+    /* Titel */
+    h1 {
+        font-size: 36px;
+        margin-top: 28px;
+        margin-bottom: 18px;
+    }
+
+    .subtitle {
+        font-size: 16px;
+        margin-bottom: 28px;
+    }
+
+    /* Vandaag */
+    .todayOverview {
+        padding: 18px;
+        margin-bottom: 20px;
+        border-radius: 16px;
+    }
+
+    .todayOverview h2 {
+        font-size: 25px;
+        margin-bottom: 12px;
+    }
+
+    .todayOverview .empty {
+        font-size: 16px;
+    }
+
+    /* Nieuwe taak knop */
+    .newTaskButton {
+        width: 100%;
+        margin: 20px 0;
+        padding: 18px 20px;
+        font-size: 19px;
+        border-radius: 14px;
+    }
+
+    /* Formulier */
+    .taskForm {
+        padding: 18px;
+        margin-top: 16px;
+        margin-bottom: 28px;
+        border-radius: 16px;
+    }
+
+    .taskForm input,
+    .taskForm select,
+    .taskForm textarea {
+        width: 100%;
+        font-size: 17px;
+        padding: 14px;
+        min-height: 52px;
+        margin-top: 12px;
+    }
+
+    .taskForm textarea {
+        min-height: 110px;
+    }
+
+    .importantOption {
+        font-size: 16px;
+        margin: 12px 0;
+    }
+
+    /* Toevoegen-knop in formulier */
+    .addTaskButton {
+        width: 100%;
+        padding: 16px;
+        font-size: 17px;
+        margin-top: 18px;
+    }
+
+    /* Week */
+    .week {
+        margin-top: 28px;
+    }
+
+    .day {
+        margin-top: 16px;
+        padding: 8px;
+        border-radius: 16px;
+    }
+
+    /* Dagnamen */
+    .day h2 {
+        font-size: 22px;
+        padding: 16px 14px;
+        margin: 0;
+    }
+
+    /* Afgerond */
+    .completedTasks h3 {
+        font-size: 16px;
+        padding: 5px 10px;
+    }
+
+    /* Taken */
+    .day li {
+        padding: 16px 42px 16px 16px;
+        margin-top: 12px;
+    }
+
+    .taskTop span {
+        font-size: 18px;
+    }
+
+    .taskTop input {
+        width: 22px;
+        height: 22px;
+    }
+
+    .taskDetails {
+        font-size: 15px;
+        margin-top: 10px;
+    }
+
+    .taskNote {
+        font-size: 15px;
+        line-height: 1.5;
+    }
+
+    .todayBadge {
+        font-size: 12px;
+        padding: 5px 10px;
+    }
+}
