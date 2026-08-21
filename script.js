@@ -367,6 +367,8 @@ async function initializeApp() {
 
     await loadTasks();
 
+    await checkWeeklyReset();
+
     loadDayStates();
     highlightToday();
     loadTodayOverview();
@@ -628,58 +630,58 @@ function getTaskDays(task) {
 
 }
 
-function resetRecurringTasks() {
+async function resetRecurringTasks() {
 
-    let savedTasks = localStorage.getItem("tasks");
+    const recurringTasks = tasks.filter(function(task) {
+        return (
+            task.herhaling === "dagelijks" ||
+            task.herhaling === "wekelijks"
+        );
+    });
 
-    if (!savedTasks) {
+    for (const task of recurringTasks) {
+
+        const { error } = await supabaseClient
+            .from("tasks")
+            .update({
+                dag_status: {}
+            })
+            .eq("id", task.id);
+
+        if (error) {
+            console.error(
+                "Weekreset mislukt voor taak:",
+                task.naam,
+                error
+            );
+            continue;
+        }
+
+        task.dagStatus = {};
+    }
+
+    renderAllTasks();
+}
+
+async function checkWeeklyReset() {
+
+    let lastReset = localStorage.getItem("lastReset");
+    let currentWeek = getCurrentWeek();
+
+    if (!lastReset) {
+        localStorage.setItem("lastReset", currentWeek);
         return;
     }
 
-
-    let saved = JSON.parse(savedTasks);
-
-
-    saved.forEach(function(task) {
-
-        if (
-            task.herhaling === "dagelijks" ||
-            task.herhaling === "wekelijks"
-        ) {
-
-            task.dagStatus = {};
-
-        }
-
-    });
-
-
-    localStorage.setItem(
-        "tasks",
-        JSON.stringify(saved)
-    );
-
-}
-
-function checkWeeklyReset() {
-
-    let lastReset = localStorage.getItem("lastReset");
-
-    let currentWeek = getCurrentWeek();
-
-
     if (lastReset !== currentWeek) {
 
-        resetRecurringTasks();
-
+        await resetRecurringTasks();
 
         localStorage.setItem(
             "lastReset",
             currentWeek
         );
-
     }
-
 }
 
 function getCurrentWeek() {
