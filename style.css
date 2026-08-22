@@ -750,6 +750,7 @@ color: #9F3A38;
     .week {
         margin-top: 28px;
     }
+}
 
 .day {
 
@@ -1016,4 +1017,24 @@ color: #9F3A38;
 
     padding: 0;
 
+}
+
+/* Definitieve modal fix */
+
+#deleteModal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0,0,0,0.35);
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+#deleteModal.modal {
+    display: none;
+}
+
+#deleteModal[style="display: flex;"] {
+    display: flex !important;
 }

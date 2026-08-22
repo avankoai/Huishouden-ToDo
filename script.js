@@ -123,11 +123,9 @@ if (editId) {
 
     });
 
-    input.value = "";
+resetTaskForm();
 
-    document.getElementById("noteInput").value = "";
-    document.getElementById("importantInput").checked = false;
-    document.getElementById("taskForm").style.display = "none";
+document.getElementById("taskForm").style.display = "none";
 
     loadTodayOverview();
 }
@@ -568,15 +566,24 @@ updateDayTitle(day, false);
 
 function toggleTaskForm() {
 
-    let form = document.getElementById("taskForm");
+let form = document.getElementById("taskForm");
 
-    if (form.style.display === "none" || form.style.display === "") {
-        form.style.display = "block";
-        document.getElementById("saveTaskButton").innerText = "Toevoegen";
-        document.getElementById("editTaskId").value = "";
-    } else {
-        form.style.display = "none";
-    }
+
+if (form.style.display === "none" || form.style.display === "") {
+
+
+    resetTaskForm();
+
+    form.style.display = "block";
+
+
+} else {
+
+
+    form.style.display = "none";
+
+
+}
 
 }
 
@@ -601,6 +608,24 @@ function openEditForm(task) {
     document.getElementById("taskForm").style.display = "block";
 
     document.getElementById("saveTaskButton").innerText = "Opslaan";
+}
+
+function resetTaskForm() {
+
+    document.getElementById("taskInput").value = "";
+
+    document.getElementById("noteInput").value = "";
+
+    document.getElementById("importantInput").checked = false;
+
+    document.getElementById("repeatInput").value = "eenmalig";
+
+    document.getElementById("dayInput").value = "Vandaag";
+
+    document.getElementById("editTaskId").value = "";
+
+    document.getElementById("saveTaskButton").innerText = "Toevoegen";
+
 }
 
 function updateDayTitle(day, open) {
