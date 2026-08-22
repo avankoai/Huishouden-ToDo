@@ -245,6 +245,19 @@ details.innerHTML = `
 
 `;
 
+// Bewerken
+
+let editButton = document.createElement("button");
+
+editButton.innerText = "✏️";
+
+editButton.className = "editButton";
+
+editButton.addEventListener("click", function() {
+
+    console.log("Bewerken:", task);
+
+});
 
     // Verwijderen
   let deleteButton = document.createElement("button");
@@ -279,8 +292,8 @@ note.innerText = task.notitie;
 }
 
 
+li.appendChild(editButton);
 li.appendChild(deleteButton);
-
 
 
     // Naar juiste dag sturen
