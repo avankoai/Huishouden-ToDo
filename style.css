@@ -1429,7 +1429,7 @@ html {
 
     .todayOverview li {
 
-        padding: 16px 90px 16px 16px;
+        padding: 16px 60px 16px 16px;
 
     }
 
@@ -2002,3 +2002,70 @@ margin-left:auto;
 
 }
 
+/* =========================
+   MOBIELE FIX VANDAAG KAARTEN
+========================= */
+
+@media (max-width: 600px) {
+
+    .todayHeader {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 15px;
+    }
+
+
+    .todayOverview {
+        padding: 16px;
+        border-radius: 16px;
+    }
+
+
+    .todayOverview li {
+        width: 100%;
+        box-sizing: border-box;
+
+        padding: 16px 60px 16px 16px;
+
+        margin-top: 12px;
+
+        border-radius: 12px;
+    }
+
+
+    .todayOverview .taskView {
+        width: 100%;
+    }
+
+
+    .todayOverview .taskTop {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+
+    .todayOverview .taskTop span {
+        font-size: 17px;
+    }
+
+
+    .todayOverview .taskDetails {
+        flex-wrap: wrap;
+        font-size: 14px;
+    }
+
+
+    .todayOverview .editButton {
+        right: 38px;
+        top: 12px;
+    }
+
+
+    .todayOverview .deleteButton {
+        right: 8px;
+        top: 12px;
+    }
+
+}
