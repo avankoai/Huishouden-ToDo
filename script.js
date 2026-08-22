@@ -751,6 +751,45 @@ function updateCompletedCount(day) {
 
 }
 
+function getOpenTaskCount(day) {
+
+    let count = 0;
+
+
+    tasks.forEach(function(task) {
+
+
+        let taskDays = getTaskDays(task);
+
+
+        if (
+            taskDays.includes(
+                day.charAt(0).toUpperCase() + day.slice(1)
+            )
+        ) {
+
+
+            if (
+                !task.dagStatus ||
+                task.dagStatus[
+                    day.charAt(0).toUpperCase() + day.slice(1)
+                ] !== "afgerond"
+            ) {
+
+                count++;
+
+            }
+
+        }
+
+
+    });
+
+
+    return count;
+
+}
+
 function toggleDay(day) {
 
     let content = document.getElementById(day + "-content");
@@ -876,6 +915,7 @@ function updateDayTitle(day, open) {
 
     let dayName = day.charAt(0).toUpperCase() + day.slice(1);
 
+
     let badge = "";
 
     if (day === getTodayName()) {
@@ -884,7 +924,57 @@ function updateDayTitle(day, open) {
 
     }
 
-    title.innerHTML = dayName + badge;
+
+    let count = getOpenTaskCount(day);
+
+
+let taskCount = "";
+
+let countClass = "green";
+
+
+if (count > 5) {
+
+    countClass = "red";
+
+} else if (count > 0) {
+
+    countClass = "orange";
+
+}
+
+
+taskCount = `
+    <span class="taskCount ${countClass}">
+        ${count}
+    </span>
+
+    <span class="dayArrow">
+        ⌄
+    </span>
+`;
+
+
+title.innerHTML = `
+
+<span class="dayLeft">
+
+    <span class="dayName">
+        ${dayName}
+    </span>
+
+    ${badge}
+
+</span>
+
+
+<span class="dayRight">
+
+    ${taskCount}
+
+</span>
+
+`;
 
 }
 
@@ -1037,7 +1127,19 @@ function getCurrentWeek() {
 function loadTodayOverview() {
 
     let todayName = getTodayName();
+let todayCount = getOpenTaskCount(todayName.toLowerCase());
 
+let todayClass = "green";
+
+if (todayCount > 5) {
+
+    todayClass = "red";
+
+} else if (todayCount > 0) {
+
+    todayClass = "orange";
+
+}
     todayName =
     todayName.charAt(0).toUpperCase() +
     todayName.slice(1);
@@ -1045,6 +1147,15 @@ function loadTodayOverview() {
 
     let container = document.getElementById("todayTasks");
 
+    let todayIndicator = document.getElementById("todayCount");
+
+if (todayIndicator) {
+
+    todayIndicator.className = "taskCount " + todayClass;
+
+    todayIndicator.innerText = todayCount;
+
+}
 
     container.innerHTML = "";
 

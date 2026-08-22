@@ -243,24 +243,6 @@ textarea {
 
 }
 
-/* Pijltje naar rechts */
-
-.day h2::after {
-
-    content: "⌄";
-
-    margin-left: auto;
-
-    font-size: 18px;
-
-    color: #555;
-
-    font-weight: 600;
-
-}
-
-
-
 /* Vandaag label */
 
 .todayBadge {
@@ -388,14 +370,6 @@ textarea {
     font-size: 14px;
 
     color: #555;
-
-}
-
-.todayOverview li {
-
-    padding: 16px 42px 16px 16px;
-
-    margin-top: 12px;
 
 }
 
@@ -1051,25 +1025,7 @@ textarea {
 ========================= */
 
 
-.todayOverview li {
 
-    position: relative;
-
-    list-style: none;
-
-    background-color: white;
-
-    padding: 12px 40px 12px 14px;
-
-    margin-top: 12px;
-
-    border-radius: 8px;
-
-    box-shadow: 0 3px 10px rgba(0,0,0,0.05);
-
-    border-left-width: 5px;
-
-}
 
 
     .todayOverview h2 {
@@ -1359,7 +1315,7 @@ html {
 
     background-color: white;
 
-    padding: 12px 90px 12px 14px;
+    padding: 16px 90px 16px 16px;
 
     margin-top: 12px;
 
@@ -1639,3 +1595,410 @@ html {
     flex-shrink: 0;
 
 }
+
+.taskCount {
+
+    width: 28px;
+
+    height: 28px;
+
+    border-radius: 50%;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    color: white;
+
+    flex-shrink: 0;
+
+}
+
+
+.taskCount.green {
+
+    background-color: #27AE60;
+
+}
+
+
+.taskCount.orange {
+
+    background-color: #F39C12;
+
+}
+
+
+.taskCount.red {
+
+    background-color: #C0392B;
+
+}
+
+/* =========================
+DAG TITEL UITLIJNING
+========================= */
+
+.day h2 {
+
+    display: flex;
+
+    align-items: center;
+
+    width: 100%;
+
+}
+
+
+.dayLeft {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+}
+
+
+.dayRight {
+
+    margin-left: auto;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+}
+
+
+.dayName {
+
+    font-weight: 700;
+
+}
+
+
+.dayArrow {
+
+    font-size: 20px;
+
+    color: #555;
+
+}
+
+.dayArrow {
+
+    font-size: 20px;
+
+    color: #555;
+
+    font-weight: 600;
+
+}
+
+.todayOverview h2 {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-start;
+
+    gap: 10px;
+
+}
+
+.todayCount {
+
+margin-left:auto;
+
+}
+
+.todayTitle {
+
+    font-weight: 700;
+
+}
+
+
+.todayCount {
+
+    margin-left: auto;
+
+}
+
+.todayOverview .taskTop {
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:flex-start;
+
+    gap:10px;
+
+    width:100%;
+
+}
+
+.todayOverview .taskView {
+
+    width:100%;
+
+}
+
+/* =========================
+   VANDAAG KAARTEN HERSTEL
+========================= */
+
+#todayTasks {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+
+#todayTasks li {
+
+    position: relative;
+
+    list-style: none;
+
+    background-color: white;
+
+    border-radius: 14px;
+
+    padding: 16px 90px 16px 16px;
+
+    margin-top: 14px;
+
+    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+
+    border-left-width: 6px;
+
+    border-left-style: solid;
+
+    overflow: hidden;
+
+}
+
+
+/* inhoud van kaart */
+
+#todayTasks .taskView {
+
+    width: 100%;
+
+}
+
+
+/* bovenste regel */
+
+#todayTasks .taskTop {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+}
+
+
+/* checkbox */
+
+#todayTasks .taskTop input {
+
+    width: 20px;
+
+    height: 20px;
+
+    flex-shrink: 0;
+
+}
+
+
+/* taaknaam */
+
+#todayTasks .taskTop span {
+
+    font-size: 20px;
+
+    font-weight: 700;
+
+    color: #111;
+
+}
+
+
+/* persoon + labels */
+
+#todayTasks .taskDetails {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-top: 12px;
+
+}
+
+
+/* notitie */
+
+#todayTasks .taskNote {
+
+    margin-top: 12px;
+
+    padding-top: 10px;
+
+    border-top: 1px solid #ddd;
+
+    font-size: 15px;
+
+    font-style: italic;
+
+    color: #666;
+
+}
+
+
+/* edit knop */
+
+#todayTasks .editButton {
+
+    position: absolute;
+
+    top: 18px;
+
+    right: 55px;
+
+}
+
+
+/* delete knop */
+
+#todayTasks .deleteButton {
+
+    position: absolute;
+
+    top: 18px;
+
+    right: 15px;
+
+}
+
+/* =========================
+   VANDAAG TITEL LABEL
+========================= */
+
+.todayOverview h2 {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+}
+
+
+.todayTitle {
+
+    font-weight: 700;
+
+    color: #3f5f6b;
+
+}
+
+
+.todayBadgeTop {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    background-color: #dbeaf2;
+
+    color: #456b80;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    padding: 5px 12px;
+
+    border-radius: 20px;
+
+    margin-left: 4px;
+
+}
+
+.todayBadgeTop {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    background-color: #dbeaf2;
+
+    color: #456b80;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    padding: 6px 14px;
+
+    border-radius: 20px;
+
+}
+
+/* =========================
+   VANDAAG HEADER
+========================= */
+
+.todayOverview h2 {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin: 0 0 12px 5px;
+
+}
+
+
+.todayBadgeTop {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    background-color: #dbeaf2;
+
+    color: #456b80;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    padding: 6px 14px;
+
+    border-radius: 20px;
+
+}
+
