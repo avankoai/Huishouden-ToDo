@@ -1,3 +1,7 @@
+/* =========================
+   BASIS
+========================= */
+
 body {
 
     font-family: Arial, sans-serif;
@@ -8,10 +12,10 @@ body {
 
     padding: 20px;
 
-        position: relative;
-
+    position: relative;
 
 }
+
 
 body::before {
 
@@ -20,9 +24,11 @@ body::before {
     position: fixed;
 
     top: 0;
+
     left: 0;
 
     width: 100%;
+
     height: 100%;
 
     background-image: url("images/background_pattern.png");
@@ -37,6 +43,10 @@ body::before {
 
 }
 
+
+/* =========================
+   TITEL
+========================= */
 
 h1 {
 
@@ -56,6 +66,7 @@ h1 {
 
 }
 
+
 .subtitle {
 
     text-align: center;
@@ -70,37 +81,116 @@ h1 {
 
 }
 
-input:not([type="checkbox"]),
-select {
-    width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    margin-top: 10px;
-    box-sizing: border-box;
-}
 
-textarea {
-    width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    margin-top: 10px;
-    box-sizing: border-box;
-    resize: vertical;
-}
+/* =========================
+   ALGEMENE ELEMENTEN
+========================= */
+
 
 button {
+
     padding: 8px 12px;
+
     cursor: pointer;
+
     border: none;
+
     border-radius: 8px;
+
     background-color: #eeeeee;
+
 }
 
 
-/* Weekoverzicht */
+input[type="checkbox"],
+select {
+
+    width: 100%;
+
+    padding: 10px;
+
+    font-size: 16px;
+
+    margin-top: 10px;
+
+    box-sizing: border-box;
+
+}
+
+
+textarea {
+
+    width: 100%;
+
+    padding: 10px;
+
+    font-size: 16px;
+
+    margin-top: 10px;
+
+    box-sizing: border-box;
+
+    resize: vertical;
+
+}
+
+
+input[type="checkbox"],
+select,
+textarea {
+
+    min-height: 45px;
+
+}
+
+
+/* =========================
+   MOBIELE BASIS AANPASSINGEN
+========================= */
+
+@media (max-width: 600px) {
+
+
+    body {
+
+        max-width: 100%;
+
+        margin: 0 auto;
+
+        padding: 18px 14px 30px;
+
+    }
+
+
+    h1 {
+
+        font-size: 36px;
+
+        margin-top: 28px;
+
+        margin-bottom: 18px;
+
+    }
+
+
+    .subtitle {
+
+        font-size: 16px;
+
+        margin-bottom: 28px;
+
+    }
+
+}
+
+/* =========================
+   WEEKOVERZICHT
+========================= */
 
 .week {
+
     margin-top: 40px;
+
 }
 
 
@@ -108,26 +198,32 @@ button {
 
     margin-top: 12px;
 
-    background-color: rgba(255,255,255,0.95);
+    background-color: white;
 
-    border-radius: 10px;
+    border-radius: 12px;
 
-    padding: 0;
-
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    box-shadow: 0 3px 12px rgba(0,0,0,0.06);
 
     overflow: hidden;
 
+    border-left: none;
+
 }
 
+
+/* =========================
+   DAG TITELS
+========================= */
 
 .day h2 {
 
     display: flex;
 
-    justify-content: space-between;
-
     align-items: center;
+
+    justify-content: flex-start;
+
+    gap: 10px;
 
     font-size: 22px;
 
@@ -137,11 +233,9 @@ button {
 
     background-color: white;
 
-    padding: 16px 18px;
+    padding: 18px 20px;
 
     margin: 0;
-
-    border-radius: 10px;
 
     cursor: pointer;
 
@@ -149,12 +243,77 @@ button {
 
 }
 
+/* Pijltje naar rechts */
 
-/* Taken */
+.day h2::after {
+
+    content: "⌄";
+
+    margin-left: auto;
+
+    font-size: 18px;
+
+    color: #555;
+
+    font-weight: 600;
+
+}
+
+
+
+/* Vandaag label */
+
+.todayBadge {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    background-color: #dbeaf2;
+
+    color: #456b80;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    padding: 5px 12px;
+
+    border-radius: 20px;
+
+    margin-left: 4px;
+
+}
+
+
+/* Huidige dag blijft hetzelfde */
+
+.day.today {
+
+    border-left: none;
+
+    box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+
+}
+
+
+
+.day.today h2 {
+
+    background-color: white;
+
+}
+
+/* =========================
+   TAKEN
+========================= */
 
 .day ul {
+
     list-style: none;
+
     padding: 0;
+
 }
 
 
@@ -177,15 +336,44 @@ button {
 }
 
 
+/* Bovenste regel taak */
+
 .taskTop {
+
     display: flex;
+
     align-items: center;
+
     justify-content: flex-start;
-    gap: 8px;
-    font-size: 17px;
+
+    gap: 10px;
+
+    font-size: 18px;
+
     width: 100%;
+
 }
 
+
+.taskTop span {
+
+    font-weight: bold;
+
+    font-size: 18px;
+
+}
+
+
+.taskTop input {
+
+    width: 18px;
+
+    height: 18px;
+
+}
+
+
+/* Details onder taak */
 
 .taskDetails {
 
@@ -203,73 +391,40 @@ button {
 
 }
 
+.todayOverview li {
 
-.day button {
+    padding: 16px 42px 16px 16px;
+
+    margin-top: 12px;
+
+}
+
+
+/* Notitie */
+
+.taskNote {
+
     margin-top: 10px;
+
+    padding-top: 8px;
+
+    border-top: 1px solid #ddd;
+
+    font-size: 13px;
+
+    color: #666;
+
+    font-style: italic;
+
 }
 
 
 /* Afgeronde taken */
 
 .completed span {
+
     text-decoration: line-through;
-}
 
-
-/* Prioriteit */
-
-.priority {
-    padding: 5px 10px;
-    border-radius: 20px;
-    font-size: 14px;
-}
-
-
-.priority.Hoog {
-    font-weight: bold;
-    border: 2px solid black;
-}
-
-
-.priority.Normaal {
-    border: 1px solid black;
-}
-
-
-.priority.Laag {
-    opacity: 0.6;
-    border: 1px solid black;
-}
-
-.taskTop {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 18px;
-}
-
-.taskTop span {
-    font-weight: bold;
-    font-size: 18px;
-}
-
-.taskNote {
-    margin-top: 10px;
-    padding-top: 8px;
-    border-top: 1px solid #ddd;
-    font-size: 13px;
-    color: #666;
-    font-style: italic;
-}
-
-.day button {
-    font-size: 13px;
-    color: #555;
-}
-
-.taskTop input {
-    width: 18px;
-    height: 18px;
 }
 
 
@@ -287,26 +442,67 @@ button {
 
 }
 
+
+/* =========================
+   PERSOON KLEUREN
+========================= */
+
 .person-Anthony {
+
     border-left: 5px solid #4A90E2;
+
 }
+
 
 .person-Danique {
+
     border-left: 5px solid #9B59B6;
+
 }
+
 
 .person-Samen {
+
     border-left: 5px solid #27AE60;
+
 }
 
-.day h2 {
-    user-select: none;
+
+/* =========================
+   LABELS
+========================= */
+
+.personName {
+
+    font-weight: 600;
+
+    color: #555;
+
+}
+
+
+.importantLabel {
+
+    padding: 5px 10px;
+
+    border-radius: 20px;
+
+    font-size: 13px;
+
+    background-color: #F6D8D6;
+
+    color: #9F3A38;
+
+    font-weight: bold;
+
 }
 
 
 .todayBadge {
 
-    display: inline-block;
+    display: inline-flex;
+
+    align-items: center;
 
     background-color: #dbeaf2;
 
@@ -320,198 +516,48 @@ button {
 
     border-radius: 20px;
 
-    margin-left: auto;
+    margin-left: 8px;
 
 }
 
 
-@media (max-width: 600px) {
+/* =========================
+   HUIDIGE DAG
+========================= */
 
-    body {
-        margin: 20px auto;
-        padding: 15px;
-    }
+.today {
 
+    background-color: white;
 
-    h1 {
-        font-size: 26px;
-    }
+    border-left: none;
 
-
-    .day h2 {
-        font-size: 20px;
-        padding: 12px 0;
-    }
-
-
-    .taskDetails {
-        flex-wrap: wrap;
-    }
-
-
-    .taskTop span {
-        font-size: 16px;
-    }
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 
 }
 
-@media (max-width: 600px) {
 
-    body {
-        max-width: 100%;
-        margin: 15px auto;
-        padding: 10px;
-    }
+.today h2 {
 
-    h1 {
-        font-size: 26px;
-        margin-bottom: 15px;
-    }
+    background-color: white;
 
-    .week {
-        margin-top: 25px;
-    }
+    border-left: none;
 
 }
 
-.navigation button {
-    flex: 1;
-    padding: 12px;
-    font-size: 16px;
-}
 
-input:not([type="checkbox"]),
-select,
-textarea {
-    min-height: 45px;
-}
+.day.today {
 
-.taskForm {
-    margin-top: 15px;
-        background-color: rgba(255,255,255,0.9);
+    background-color: rgba(255,255,255,0.95);
 
-    border-radius: 16px;
+    border-left: none;
 
-    padding: 15px;
-}
-
-
-#taskForm {
-    display: none;
-}
-
-
-.taskForm {
-    margin-top: 10px;
-    margin-bottom: 20px;
-}
-
-
-@media (max-width: 600px) {
-
-        h1 {
-
-        font-size: 32px;
-
-    }
-
-        .newTaskButton {
-
-        width: 90%;
-
-    }
-
-
-    .newTaskButton {
-        font-size: 18px;
-        padding: 16px;
-    }
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 
 }
 
-.addTaskButton {
-    margin-top: 20px;
-    padding: 12px 20px;
-
-    font-size: 15px;
-    font-weight: bold;
-
-    border-radius: 10px;
-    border: none;
-
-    background-color: #eeeeee;
-    color: #333;
-
-    cursor: pointer;
-}
-
-
-.addTaskButton:hover {
-    background-color: #dddddd;
-}
-
-/* Formulier styling */
-
-.taskForm input,
-.taskForm select,
-.taskForm textarea {
-
-    background-color: #fafafa;
-
-    border: 1px solid #ddd;
-    border-radius: 10px;
-
-    padding: 12px;
-
-    font-size: 16px;
-
-    transition: border-color 0.2s, box-shadow 0.2s;
-}
-
-.taskForm input:focus,
-.taskForm select:focus,
-.taskForm textarea:focus {
-
-    outline: none;
-
-    border-color: #888;
-
-    box-shadow: 0 0 0 3px rgba(0,0,0,0.08);
-
-}
-
-.taskForm textarea {
-
-    min-height: 90px;
-
-    line-height: 1.4;
-
-}
-
-.taskForm {
-
-    background-color: #f8f8f8;
-
-    padding: 20px;
-
-    border-radius: 16px;
-
-    margin-top: 15px;
-
-    margin-bottom: 25px;
-
-}
-
-@media (max-width: 600px) {
-
-    .taskForm {
-
-        padding: 15px;
-
-    }
-
-}
-
+/* =========================
+   NIEUWE TAAK KNOP
+========================= */
 
 .newTaskButton {
 
@@ -546,454 +592,219 @@ textarea {
 
 .newTaskButton:hover {
 
-transform: translateY(-2px);
+    transform: translateY(-2px);
 
-box-shadow: 0 6px 16px rgba(0,0,0,0.18);
-
-}
-
-/* Huidige dag */
-
-.today h2 {
-
-    background-color: white;
-
-    border-left: none;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.18);
 
 }
 
 
-/* Label Vandaag */
+/* =========================
+   FORMULIER
+========================= */
 
+#taskForm {
 
-.importantLabel {
-
-    padding: 5px 10px;
-
-    border-radius: 20px;
-
-    font-size: 13px;
-
- background-color: #F6D8D6;
-color: #9F3A38;
-
-    font-weight: bold;
-
-}
-
-.deleteButton {
-
-    position: absolute;
-
-    top: 10px;
-
-    right: 10px;
-
-    width: 28px;
-
-    height: 28px;
-
-    border-radius: 50%;
-
-    background-color: transparent;
-
-    color: #999;
-
-    font-size: 20px;
-
-    line-height: 20px;
-
-    padding: 0;
+    display: none;
 
 }
 
 
-.deleteButton:hover {
+.taskForm {
 
-    background-color: #f5dddd;
+    background-color: #f8f8f8;
 
-    color: #b84a4a;
+    border-radius: 16px;
 
-}
+    padding: 20px;
 
-.personName {
+    margin-top: 15px;
 
-    font-weight: 600;
-
-    color: #555;
-
-}
-
-.todayOverview {
-    background-color: rgba(255,255,255,0.92);
-    border-radius: 12px;
-    padding: 12px;
     margin-bottom: 25px;
-    box-shadow: 0 3px 12px rgba(0,0,0,0.06);
-}
-
-
-.todayOverview h2 {
-    margin: 0 0 12px 5px;
-    font-size: 22px;
-    color: #3f5f6b;
-}
-
-
-.todayOverview .empty {
-
-    color: #777;
-
-    font-size: 14px;
 
 }
 
-.todayOverview li {
-    position: relative;
 
-    list-style: none;
-    background-color: white;
-    padding: 12px 40px 12px 14px;
-    margin-top: 12px;
-    border-radius: 8px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.05);
-    border-left-width: 5px;
-}
+/* Formuliervelden */
 
-/* ========================================
-   MOBIELE WEERGAVE
-   ======================================== */
+.taskForm input,
+.taskForm select,
+.taskForm textarea {
 
-@media (max-width: 600px) {
+    background-color: #fafafa;
 
-    /* Pagina breder gebruiken */
-    body {
-        max-width: none;
-        width: auto;
-        margin: 0;
-        padding: 18px 14px 30px;
-    }
-
-    /* Titel */
-    h1 {
-        font-size: 36px;
-        margin-top: 28px;
-        margin-bottom: 18px;
-    }
-
-    .subtitle {
-        font-size: 16px;
-        margin-bottom: 28px;
-    }
-
-    /* Vandaag */
-    .todayOverview {
-        padding: 18px;
-        margin-bottom: 20px;
-        border-radius: 16px;
-    }
-
-    .todayOverview h2 {
-        font-size: 25px;
-        margin-bottom: 12px;
-    }
-
-    .todayOverview .empty {
-        font-size: 16px;
-    }
-
-    /* Nieuwe taak knop */
-    .newTaskButton {
-        width: 100%;
-        margin: 20px 0;
-        padding: 18px 20px;
-        font-size: 19px;
-        border-radius: 14px;
-    }
-
-    /* Formulier */
-    .taskForm {
-        padding: 18px;
-        margin-top: 16px;
-        margin-bottom: 28px;
-        border-radius: 16px;
-    }
-
-    .taskForm input,
-    .taskForm select,
-    .taskForm textarea {
-        width: 100%;
-        font-size: 17px;
-        padding: 14px;
-        min-height: 52px;
-        margin-top: 12px;
-    }
-
-    .taskForm textarea {
-        min-height: 110px;
-    }
-
-    .importantOption {
-        font-size: 16px;
-        margin: 12px 0;
-    }
-
-    /* Toevoegen-knop in formulier */
-    .addTaskButton {
-        width: 100%;
-        padding: 16px;
-        font-size: 17px;
-        margin-top: 18px;
-    }
-
-    /* Week */
-    .week {
-        margin-top: 28px;
-    }
-}
-
-.day {
-
-    margin-top: 12px;
-
-    padding: 0;
+    border: 1px solid #ddd;
 
     border-radius: 10px;
 
+    padding: 12px;
+
+    font-size: 16px;
+
+    transition: border-color 0.2s, box-shadow 0.2s;
+
 }
 
-    /* Dagnamen */
-    .day h2 {
-        font-size: 22px;
-        padding: 16px 14px;
-        margin: 0;
-    }
 
-    /* Afgerond */
-    .completedTasks h3 {
-        font-size: 16px;
-        padding: 5px 10px;
-    }
+.taskForm input:focus,
+.taskForm select:focus,
+.taskForm textarea:focus {
 
-    /* Taken */
-    .day li {
-        padding: 16px 42px 16px 16px;
-        margin-top: 12px;
-    }
+    outline: none;
 
-    .taskTop span {
-        font-size: 18px;
-    }
+    border-color: #888;
 
-    .taskTop input {
-        width: 22px;
-        height: 22px;
-    }
+    box-shadow: 0 0 0 3px rgba(0,0,0,0.08);
 
-    .taskDetails {
-        font-size: 15px;
-        margin-top: 10px;
-    }
+}
 
-    .taskNote {
-        font-size: 15px;
-        line-height: 1.5;
-    }
+
+.taskForm textarea {
+
+    min-height: 90px;
+
+    line-height: 1.4;
+
+}
+
+
+/* Belangrijk checkbox */
+
+.importantOption {
+
+    font-size: 16px;
+
+    margin: 12px 0;
+
+}
+
 
 .importantOption input[type="checkbox"] {
+
     width: 18px;
+
     height: 18px;
+
     min-height: 0;
+
     margin: 0 8px 0 0;
+
     padding: 0;
+
     box-shadow: none;
+
 }
+
 
 .importantOption label {
+
     display: flex;
+
     align-items: center;
+
 }
+
 
 /* =========================
-   Verwijder popup
+   FORMULIER KNOPPEN
 ========================= */
 
-#deleteModal {
-    display: none;
-}
-
-.modal {
-
-    display: none;
-
-    position: fixed;
-
-    inset: 0;
-
-    background-color: rgba(0,0,0,0.35);
-
-    justify-content: center;
-
-    align-items: center;
-
-    z-index: 1000;
-
-}
-
-
-.modalContent {
-
-    background-color: white;
-
-    width: 85%;
-
-    max-width: 350px;
-
-    padding: 25px;
-
-    border-radius: 18px;
-
-    text-align: center;
-
-    box-shadow: 0 8px 30px rgba(0,0,0,0.2);
-
-}
-
-
-.modalContent h3 {
-
-    margin-top: 0;
-
-    color: #3f5f6b;
-
-    font-size: 22px;
-
-}
-
-
-.modalContent p {
-
-    color: #666;
-
-    margin-bottom: 25px;
-
-}
-
-
-.modalButtons {
+.formButtons {
 
     display: flex;
 
     gap: 12px;
 
+    margin-top: 20px;
+
+}
+
+
+.formButtons button,
+.formButtons .addTaskButton,
+.formButtons .cancelTaskButton {
+
+    width: 100%;
+
+    height: 60px;
+
+    margin-top: 0;
+
+    padding: 0;
+
+    font-size: 17px;
+
+    font-weight: 700;
+
+    border-radius: 14px;
+
+    border: none;
+
+    cursor: pointer;
+
+    display: flex;
+
+    align-items: center;
+
     justify-content: center;
 
-}
-
-
-.modalButtons button {
-
-    flex: 1;
-
-    padding: 12px;
-
-    border-radius: 12px;
-
-    font-size: 15px;
+    box-sizing: border-box;
 
 }
 
 
-/* Annuleren knop */
+/* Opslaan */
 
-#cancelDelete {
+.formButtons .addTaskButton {
 
-    background-color: #eeeeee;
-
-    color: #555;
-
-}
-
-
-/* Verwijderen knop */
-
-#confirmDelete {
-
-    background-color: #b84a4a;
+    background-color: #3f5f6b;
 
     color: white;
 
 }
 
-@media (max-width:600px) {
 
+/* Annuleren */
 
-.day {
+.formButtons .cancelTaskButton {
 
-    margin-top: 12px;
+    background-color: #eeeeee;
 
-    border-radius: 10px;
-
-}
-
-
-.day h2 {
-
-    font-size: 21px;
-
-    padding: 14px 16px;
+    color: #666;
 
 }
 
 
-.week {
+/* Oude toevoegknop (voor zekerheid behouden) */
+
+.addTaskButton {
 
     margin-top: 20px;
 
-}
+    padding: 12px 20px;
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    border-radius: 10px;
+
+    border: none;
+
+    background-color: #dddddd;
+
+    color: #333;
+
+    cursor: pointer;
 
 }
 
-/* Fix huidige dag styling */
-
-.today {
-
-    background-color: white;
-
-    border-left: none;
-
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-
-}
+/* =========================
+   BEWERKEN & VERWIJDEREN
+========================= */
 
 
-.today h2 {
-
-    background-color: white;
-
-    border-left: none;
-
-}
-
-/* huidige dag volledig neutraal maken */
-
-.day.today {
-
-    background-color: rgba(255,255,255,0.95);
-
-    border-left: none;
-
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-
-}
-
-}
-
-/* Verwijder blauwe klik-highlight op mobiele apparaten */
-
-* {
-    -webkit-tap-highlight-color: transparent;
-}
+/* Bewerken knop */
 
 .editButton {
 
@@ -1019,22 +830,659 @@ color: #9F3A38;
 
 }
 
-/* Definitieve modal fix */
+
+/* Verwijderen knop */
+
+.deleteButton {
+
+    position: absolute;
+
+    top: 10px;
+
+    right: 10px;
+
+    width: 28px;
+
+    height: 28px;
+
+    border-radius: 50%;
+
+    background-color: #f5dddd;
+
+    color: #b84a4a;
+
+    font-size: 20px;
+
+    line-height: 20px;
+
+    padding: 0;
+
+}
+
+
+/* =========================
+   VERWIJDER POPUP
+========================= */
+
 
 #deleteModal {
+
     display: none;
+
     position: fixed;
+
     inset: 0;
+
     background-color: rgba(0,0,0,0.35);
+
     justify-content: center;
+
     align-items: center;
+
     z-index: 9999;
+
 }
+
 
 #deleteModal.modal {
+
     display: none;
+
 }
 
+
+/* Wanneer JavaScript display:flex gebruikt */
+
 #deleteModal[style="display: flex;"] {
+
     display: flex !important;
+
+}
+
+
+
+.modalContent {
+
+    background-color: white;
+
+    width: 85%;
+
+    max-width: 350px;
+
+    padding: 25px;
+
+    border-radius: 18px;
+
+    text-align: center;
+
+    box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+
+}
+
+
+
+.modalContent h3 {
+
+    margin-top: 0;
+
+    color: #3f5f6b;
+
+    font-size: 22px;
+
+}
+
+
+.modalContent p {
+
+    color: #666;
+
+    margin-bottom: 25px;
+
+}
+
+
+/* Modal knoppen */
+
+.modalButtons {
+
+    display: flex;
+
+    gap: 12px;
+
+    justify-content: center;
+
+}
+
+
+.modalButtons button {
+
+    flex: 1;
+
+    padding: 12px;
+
+    border-radius: 12px;
+
+    font-size: 15px;
+
+}
+
+
+
+/* Annuleren */
+
+#cancelDelete {
+
+    background-color: #eeeeee;
+
+    color: #555;
+
+}
+
+
+
+/* Verwijderen */
+
+#confirmDelete {
+
+    background-color: #b84a4a;
+
+    color: white;
+
+}
+
+/* =========================
+   MOBIELE WEERGAVE
+========================= */
+
+@media (max-width: 600px) {
+
+
+    /* Pagina */
+
+    body {
+
+        max-width: none;
+
+        width: auto;
+
+        margin: 0;
+
+        padding: 18px 14px 30px;
+
+    }
+
+
+    /* Titel */
+
+    h1 {
+
+        font-size: 36px;
+
+        margin-top: 28px;
+
+        margin-bottom: 18px;
+
+    }
+
+
+    .subtitle {
+
+        font-size: 16px;
+
+        margin-bottom: 28px;
+
+    }
+
+
+    /* Vandaag */
+
+    .todayOverview {
+
+        padding: 18px;
+
+        margin-bottom: 20px;
+
+        border-radius: 16px;
+
+    }
+
+    /* =========================
+   VANDAAG TAKENKAARTEN
+========================= */
+
+
+.todayOverview li {
+
+    position: relative;
+
+    list-style: none;
+
+    background-color: white;
+
+    padding: 12px 40px 12px 14px;
+
+    margin-top: 12px;
+
+    border-radius: 8px;
+
+    box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+
+    border-left-width: 5px;
+
+}
+
+
+    .todayOverview h2 {
+
+        font-size: 25px;
+
+        margin-bottom: 12px;
+
+    }
+
+
+    .todayOverview .empty {
+
+        font-size: 16px;
+
+    }
+
+
+    /* Nieuwe taak knop */
+
+    .newTaskButton {
+
+        width: 100%;
+
+        margin: 20px 0;
+
+        padding: 18px 20px;
+
+        font-size: 19px;
+
+        border-radius: 14px;
+
+    }
+
+
+    /* Formulier */
+
+    .taskForm {
+
+        padding: 18px;
+
+        margin-top: 16px;
+
+        margin-bottom: 28px;
+
+        border-radius: 16px;
+
+    }
+
+
+    .taskForm input,
+    .taskForm select,
+    .taskForm textarea {
+
+        width: 100%;
+
+        font-size: 17px;
+
+        padding: 14px;
+
+        min-height: 52px;
+
+        margin-top: 12px;
+
+    }
+
+
+    .taskForm textarea {
+
+        min-height: 110px;
+
+    }
+
+
+    .importantOption {
+
+        font-size: 16px;
+
+        margin: 12px 0;
+
+    }
+
+
+    /* Formulier knop */
+
+    .addTaskButton {
+
+        width: 100%;
+
+        padding: 16px;
+
+        font-size: 17px;
+
+        margin-top: 18px;
+
+    }
+
+
+    /* Week */
+
+    .week {
+
+        margin-top: 20px;
+
+    }
+
+
+    .day {
+
+        margin-top: 12px;
+
+        padding: 0;
+
+        border-radius: 10px;
+
+    }
+
+
+    /* Dag titel */
+
+    .day h2 {
+
+        font-size: 21px;
+
+        padding: 14px 16px;
+
+    }
+
+
+    /* Taken */
+
+    .day li {
+
+        padding: 16px 42px 16px 16px;
+
+        margin-top: 12px;
+
+    }
+
+
+    .taskTop span {
+
+        font-size: 18px;
+
+    }
+
+
+    .taskTop input {
+
+        width: 22px;
+
+        height: 22px;
+
+    }
+
+
+    .taskDetails {
+
+        font-size: 15px;
+
+        margin-top: 10px;
+
+        flex-wrap: wrap;
+
+    }
+
+
+    .taskNote {
+
+        font-size: 15px;
+
+        line-height: 1.5;
+
+    }
+
+
+    /* Afgeronde taken */
+
+    .completedTasks h3 {
+
+        font-size: 16px;
+
+        padding: 5px 10px;
+
+    }
+
+}
+
+/* =========================
+   GLOBALE FIXES
+========================= */
+
+
+/* Verwijder blauwe klik-highlight op mobiele apparaten */
+
+* {
+
+    -webkit-tap-highlight-color: transparent;
+
+}
+
+
+/* Zorg dat knoppen netjes blijven uitlijnen */
+
+button {
+
+    font-family: inherit;
+
+}
+
+
+/* Voorkom onverwachte breedteproblemen */
+
+* {
+
+    box-sizing: border-box;
+
+}
+
+
+/* Soepel scrollen */
+
+html {
+
+    scroll-behavior: smooth;
+
+}
+
+/* =========================
+   VANDAAG OVERZICHT FIX
+========================= */
+
+
+.todayOverview {
+
+    background-color: rgba(255,255,255,0.92);
+
+    border-radius: 12px;
+
+    padding: 18px;
+
+    margin-bottom: 25px;
+
+    box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+
+}
+
+
+.todayOverview h2 {
+
+    margin: 0 0 12px 5px;
+
+    font-size: 22px;
+
+    color: #3f5f6b;
+
+}
+
+
+/* Container zonder standaard lijstgedrag */
+
+#todayTasks {
+
+    padding: 0;
+
+    margin: 0;
+
+}
+
+
+#todayTasks ul {
+
+    padding: 0;
+
+    margin: 0;
+
+}
+
+
+/* De echte taakkaarten */
+
+.todayOverview li {
+
+    position: relative;
+
+    list-style: none;
+
+    background-color: white;
+
+    padding: 12px 90px 12px 14px;
+
+    margin-top: 12px;
+
+    border-radius: 8px;
+
+    box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+
+    border-left-width: 5px;
+
+}
+
+
+/* Naam bovenaan */
+
+.todayOverview .taskTop {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+}
+
+
+.todayOverview .taskTop span {
+
+    font-weight: bold;
+
+    font-size: 18px;
+
+}
+
+
+/* Checkbox */
+
+.todayOverview .taskTop input {
+
+    width: 18px;
+
+    height: 18px;
+
+}
+
+
+/* Details */
+
+.todayOverview .taskDetails {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-top: 8px;
+
+    font-size: 14px;
+
+    color: #555;
+
+}
+
+
+/* Notitie */
+
+.todayOverview .taskNote {
+
+    margin-top: 10px;
+
+    padding-top: 8px;
+
+    border-top: 1px solid #ddd;
+
+    font-size: 13px;
+
+    color: #666;
+
+    font-style: italic;
+
+}
+
+
+/* Edit + delete knoppen */
+
+.todayOverview .editButton {
+
+    right: 45px;
+
+}
+
+
+.todayOverview .deleteButton {
+
+    right: 10px;
+
+}
+
+
+/* Mobiel */
+
+@media (max-width:600px) {
+
+
+    .todayOverview {
+
+        padding: 18px;
+
+    }
+
+
+    .todayOverview li {
+
+        padding: 16px 90px 16px 16px;
+
+    }
+
+
+    .todayOverview .taskTop span {
+
+        font-size: 18px;
+
+    }
+
+
 }

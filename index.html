@@ -38,6 +38,9 @@
 
 <div id="taskForm" class="taskForm">
 
+
+<h2 id="taskFormTitle">Nieuwe taak toevoegen</h2>
+
 <input type="hidden" id="editTaskId">
 
 <input id="taskInput" placeholder="Nieuwe taak...">
@@ -88,9 +91,17 @@
 
 </div>
 
-<button id="saveTaskButton" class="addTaskButton" onclick="addTask()">
-    Toevoegen
-</button>
+<div class="formButtons">
+
+    <button id="saveTaskButton" class="addTaskButton" onclick="addTask()">
+        Toevoegen
+    </button>
+
+    <button id="cancelEditButton" class="cancelTaskButton">
+        Annuleren
+    </button>
+
+</div>
 
 </div>
 

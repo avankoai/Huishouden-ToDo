@@ -8,6 +8,7 @@ const supabaseClient = supabase.createClient(
 
 let tasks = [];
 let deleteTaskTarget = null;
+let editingTaskId = null;
 
 function dbRowToTask(row) {
     return {
@@ -400,7 +401,7 @@ async function initializeApp() {
 
     await checkWeeklyReset();
 
-    loadDayStates();
+    closeAllDays();
     highlightToday();
     loadTodayOverview();
 
@@ -442,6 +443,32 @@ function goToToday() {
 
 }
 
+function closeAllDays() {
+
+    let days = [
+        "maandag",
+        "dinsdag",
+        "woensdag",
+        "donderdag",
+        "vrijdag",
+        "zaterdag",
+        "zondag"
+    ];
+
+    days.forEach(function(day) {
+
+        let content = document.getElementById(day + "-content");
+
+        if (content) {
+            content.style.display = "none";
+        }
+
+        updateDayTitle(day, false);
+
+    });
+
+}
+
 function highlightToday() {
 
     let days = [
@@ -466,11 +493,6 @@ function highlightToday() {
         let section = todayElement.parentElement;
 
         section.classList.add("today");
-
-        // Vandaag altijd openen
-        todayElement.style.display = "block";
-
-        updateDayTitle(todayName, true);
 
     }
 
@@ -608,6 +630,9 @@ function openEditForm(task) {
     document.getElementById("taskForm").style.display = "block";
 
     document.getElementById("saveTaskButton").innerText = "Opslaan";
+
+    document.getElementById("taskFormTitle").innerText =
+    "Taak aanpassen";
 }
 
 function resetTaskForm() {
@@ -626,6 +651,19 @@ function resetTaskForm() {
 
     document.getElementById("saveTaskButton").innerText = "Toevoegen";
 
+    document.getElementById("taskFormTitle").innerText =
+    "Nieuwe taak toevoegen";
+
+}
+
+function cancelEdit() {
+
+    resetTaskForm();
+
+    document
+        .getElementById("taskForm")
+        .style.display = "none";
+
 }
 
 function updateDayTitle(day, open) {
@@ -634,15 +672,15 @@ function updateDayTitle(day, open) {
 
     let dayName = day.charAt(0).toUpperCase() + day.slice(1);
 
-let arrow = open ? "⌄" : "›";
-
     let badge = "";
 
     if (day === getTodayName()) {
+
         badge = '<span class="todayBadge">Vandaag</span>';
+
     }
 
-    title.innerHTML = arrow + " " + dayName + badge;
+    title.innerHTML = dayName + badge;
 
 }
 
@@ -1005,5 +1043,13 @@ document
 
 
     renderAllTasks();
+
+});
+
+document
+.getElementById("cancelEditButton")
+.addEventListener("click", function() {
+
+    cancelEdit();
 
 });
