@@ -283,7 +283,217 @@ editButton.className = "editButton";
 
 editButton.addEventListener("click", function() {
 
-    openEditForm(task);
+    openInlineEdit(task, li);
+
+});
+
+// Inline bewerkingsformulier
+
+let editForm = document.createElement("div");
+
+editForm.className = "inlineEditForm";
+
+editForm.style.display = "none";
+
+
+editForm.innerHTML = `
+
+<label>Taak</label>
+<input class="editName" value="${task.naam}">
+
+
+<label>Persoon</label>
+
+<select class="editPerson">
+
+<option value="Anthony" ${task.persoon === "Anthony" ? "selected" : ""}>
+Anthony
+</option>
+
+<option value="Danique" ${task.persoon === "Danique" ? "selected" : ""}>
+Danique
+</option>
+
+<option value="Samen" ${task.persoon === "Samen" ? "selected" : ""}>
+Samen
+</option>
+
+</select>
+
+
+<label>Notitie</label>
+
+<textarea class="editNote">${task.notitie}</textarea>
+
+
+<label class="editImportant">
+
+<input type="checkbox" class="editImportantCheckbox" ${task.belangrijk ? "checked" : ""}>
+
+Belangrijke taak
+
+</label>
+
+
+<label>Herhaling</label>
+
+<select class="editRepeat">
+
+<option value="eenmalig" ${task.herhaling === "eenmalig" ? "selected" : ""}>
+Eenmalig
+</option>
+
+<option value="dagelijks" ${task.herhaling === "dagelijks" ? "selected" : ""}>
+Dagelijks
+</option>
+
+<option value="wekelijks" ${task.herhaling === "wekelijks" ? "selected" : ""}>
+Wekelijks
+</option>
+
+</select>
+
+
+<label>Dag</label>
+
+<select class="editDay">
+
+<option value="Maandag" ${task.dag === "Maandag" ? "selected" : ""}>
+Maandag
+</option>
+
+<option value="Dinsdag" ${task.dag === "Dinsdag" ? "selected" : ""}>
+Dinsdag
+</option>
+
+<option value="Woensdag" ${task.dag === "Woensdag" ? "selected" : ""}>
+Woensdag
+</option>
+
+<option value="Donderdag" ${task.dag === "Donderdag" ? "selected" : ""}>
+Donderdag
+</option>
+
+<option value="Vrijdag" ${task.dag === "Vrijdag" ? "selected" : ""}>
+Vrijdag
+</option>
+
+<option value="Zaterdag" ${task.dag === "Zaterdag" ? "selected" : ""}>
+Zaterdag
+</option>
+
+<option value="Zondag" ${task.dag === "Zondag" ? "selected" : ""}>
+Zondag
+</option>
+
+</select>
+
+
+<div class="inlineEditButtons">
+
+<button class="saveInlineEdit">
+Opslaan
+</button>
+
+<button class="cancelInlineEdit">
+Annuleren
+</button>
+
+</div>
+
+`;
+
+let cancelInlineButton = editForm.querySelector(".cancelInlineEdit");
+
+cancelInlineButton.addEventListener("click", function() {
+
+    editForm.style.display = "none";
+
+
+    let view = li.querySelector(".taskView");
+
+
+    if (view) {
+
+        view.style.display = "block";
+
+    }
+
+});
+
+let saveInlineButton = editForm.querySelector(".saveInlineEdit");
+
+
+saveInlineButton.addEventListener("click", async function() {
+
+
+    let updatedTask = {
+
+        naam: editForm.querySelector(".editName").value,
+
+        persoon: editForm.querySelector(".editPerson").value,
+
+        notitie: editForm.querySelector(".editNote").value,
+
+        belangrijk: editForm.querySelector(".editImportantCheckbox").checked,
+
+        herhaling: editForm.querySelector(".editRepeat").value,
+
+        dag: editForm.querySelector(".editDay").value,
+
+        dagStatus: task.dagStatus || {}
+
+    };
+
+
+    const { error } = await supabaseClient
+
+        .from("tasks")
+
+        .update(taskToDb(updatedTask))
+
+        .eq("id", task.id);
+
+
+
+    if (error) {
+
+        console.error(
+            "Taak aanpassen mislukt:",
+            error
+        );
+
+        return;
+
+    }
+
+
+let updated = {
+    ...task,
+    ...updatedTask,
+    id: task.id
+};
+
+
+// bestaande taak in array vervangen
+
+let index = tasks.findIndex(function(item) {
+
+    return item.id === task.id;
+
+});
+
+
+if (index !== -1) {
+
+    tasks[index] = updated;
+
+}
+
+
+// alles opnieuw tekenen
+
+renderAllTasks();
 
 });
 
@@ -308,20 +518,36 @@ deleteButton.addEventListener("click", function() {
 
 
     // Alles samenvoegen
-li.appendChild(topRow);
-li.appendChild(details);
+let taskView = document.createElement("div");
+
+taskView.className = "taskView";
+
+
+taskView.appendChild(topRow);
+taskView.appendChild(details);
 
 
 if (task.notitie) {
+
     let note = document.createElement("div");
+
     note.className = "taskNote";
-note.innerText = task.notitie;
-    li.appendChild(note);
+
+    note.innerText = task.notitie;
+
+    taskView.appendChild(note);
+
 }
 
 
-li.appendChild(editButton);
-li.appendChild(deleteButton);
+taskView.appendChild(editButton);
+taskView.appendChild(deleteButton);
+
+
+
+li.appendChild(taskView);
+
+li.appendChild(editForm);
 
 
     // Naar juiste dag sturen
@@ -593,6 +819,24 @@ function openEditForm(task) {
 
     document.getElementById("taskFormTitle").innerText =
     "Taak aanpassen";
+}
+
+function openInlineEdit(task, li) {
+
+    let form = li.querySelector(".inlineEditForm");
+
+    let view = li.querySelector(".taskView");
+
+
+    if (!form || !view) {
+        return;
+    }
+
+
+    view.style.display = "none";
+
+    form.style.display = "block";
+
 }
 
 function resetTaskForm() {

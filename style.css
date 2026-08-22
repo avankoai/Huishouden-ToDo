@@ -1486,3 +1486,156 @@ html {
 
 
 }
+
+/* Formulier velden desktop gelijk trekken */
+
+.taskForm input,
+.taskForm select,
+.taskForm textarea {
+
+    width: 100%;
+
+    min-height: 48px;
+
+    padding: 12px;
+
+    font-size: 16px;
+
+    box-sizing: border-box;
+
+}
+
+.inlineEditForm {
+
+    margin-top: 15px;
+
+    padding-top: 15px;
+
+    border-top: 1px solid #ddd;
+
+}
+
+
+.inlineEditForm label {
+
+    display: block;
+
+    margin-top: 10px;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    color: #555;
+
+}
+
+
+.inlineEditForm input,
+.inlineEditForm select,
+.inlineEditForm textarea {
+
+    width: 100%;
+
+    margin-top: 6px;
+
+    padding: 10px;
+
+    border-radius: 10px;
+
+    border: 1px solid #ddd;
+
+    box-sizing: border-box;
+
+}
+
+
+.inlineEditButtons {
+
+    display: flex;
+
+    gap: 10px;
+
+    margin-top: 15px;
+
+}
+
+
+.inlineEditButtons button {
+
+    flex: 1;
+
+    padding: 12px;
+
+    border-radius: 10px;
+
+}
+
+
+.saveInlineEdit {
+
+    background-color: #3f5f6b;
+
+    color: white;
+
+}
+
+
+.cancelInlineEdit {
+
+    background-color: #eeeeee;
+
+    color: #555;
+
+}
+
+.taskView {
+    width: 100%;
+}
+
+
+.inlineEditForm {
+    width: 100%;
+}
+
+.inlineEditForm input[type="checkbox"] {
+
+    width: 18px;
+
+    height: 18px;
+
+    min-height: 0;
+
+    padding: 0;
+
+    margin: 0 8px 0 0;
+
+    box-sizing: border-box;
+
+}
+
+
+.inlineEditForm .editImportant {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    margin-top: 15px;
+
+    padding-bottom: 15px;
+
+    margin-bottom: 15px;
+
+    border-bottom: 1px solid #ddd;
+
+}
+
+
+.inlineEditForm .editImportant input {
+
+    flex-shrink: 0;
+
+}
