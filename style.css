@@ -303,6 +303,28 @@ button {
     user-select: none;
 }
 
+
+.todayBadge {
+
+    display: inline-block;
+
+    background-color: #dbeaf2;
+
+    color: #456b80;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    padding: 5px 12px;
+
+    border-radius: 20px;
+
+    margin-left: auto;
+
+}
+}
+
 @media (max-width: 600px) {
 
     body {
@@ -777,27 +799,6 @@ color: #9F3A38;
         line-height: 1.5;
     }
 
-.todayBadge {
-
-    display: inline-block;
-
-    background-color: #dbeaf2;
-
-    color: #456b80;
-
-    font-size: 12px;
-
-    font-weight: 700;
-
-    padding: 5px 12px;
-
-    border-radius: 20px;
-
-    margin-left: auto;
-
-}
-}
-
 .importantOption input[type="checkbox"] {
     width: 18px;
     height: 18px;
@@ -970,5 +971,17 @@ color: #9F3A38;
     background-color: white;
 
     border-left: none;
+
+}
+
+/* huidige dag volledig neutraal maken */
+
+.day.today {
+
+    background-color: rgba(255,255,255,0.95);
+
+    border-left: none;
+
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 
 }
