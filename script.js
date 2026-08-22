@@ -533,15 +533,11 @@ function toggleDay(day) {
 
         content.style.display = "block";
 
-        saveDayState(day, "open");
-
         updateDayTitle(day, true);
 
     } else {
 
         content.style.display = "none";
-
-        saveDayState(day, "closed");
 
         updateDayTitle(day, false);
 
@@ -549,42 +545,6 @@ function toggleDay(day) {
 
 }
 
-function saveDayState(day, state) {
-
-    let saved = JSON.parse(localStorage.getItem("dayStates")) || {};
-
-    saved[day] = state;
-
-    localStorage.setItem(
-        "dayStates",
-        JSON.stringify(saved)
-    );
-
-}
-
-function loadDayStates() {
-
-    let saved = JSON.parse(localStorage.getItem("dayStates")) || {};
-
-    Object.keys(saved).forEach(function(day) {
-
-        if (saved[day] === "closed") {
-
-            let content = document.getElementById(day + "-content");
-            let title = document.getElementById(day + "-title");
-
-            if (content && title) {
-
-                content.style.display = "none";
-updateDayTitle(day, false);
-
-            }
-
-        }
-
-    });
-
-}
 
 function toggleTaskForm() {
 
