@@ -38,6 +38,7 @@ async function addTask() {
 
     let input = document.getElementById("taskInput");
     let taskText = input.value;
+    let editId = document.getElementById("editTaskId").value;
 
     let person = document.getElementById("personInput").value;
     let important = document.getElementById("importantInput").checked;
@@ -68,11 +69,39 @@ async function addTask() {
         dagStatus: {}
     };
 
-    const { data, error } = await supabaseClient
+let data;
+let error;
+
+
+if (editId) {
+
+
+    const result = await supabaseClient
+        .from("tasks")
+        .update(taskToDb(newTask))
+        .eq("id", editId)
+        .select()
+        .single();
+
+
+    data = result.data;
+    error = result.error;
+
+
+} else {
+
+
+    const result = await supabaseClient
         .from("tasks")
         .insert(taskToDb(newTask))
         .select()
         .single();
+
+
+    data = result.data;
+    error = result.error;
+
+}
 
     if (error) {
         console.error("Taak opslaan mislukt:", error);
@@ -255,7 +284,7 @@ editButton.className = "editButton";
 
 editButton.addEventListener("click", function() {
 
-    console.log("Bewerken:", task);
+    openEditForm(task);
 
 });
 
@@ -543,10 +572,35 @@ function toggleTaskForm() {
 
     if (form.style.display === "none" || form.style.display === "") {
         form.style.display = "block";
+        document.getElementById("saveTaskButton").innerText = "Toevoegen";
+        document.getElementById("editTaskId").value = "";
     } else {
         form.style.display = "none";
     }
 
+}
+
+function openEditForm(task) {
+
+    document.getElementById("taskInput").value = task.naam;
+
+    document.getElementById("personInput").value = task.persoon;
+
+    document.getElementById("noteInput").value = task.notitie;
+
+    document.getElementById("importantInput").checked = task.belangrijk;
+
+    document.getElementById("repeatInput").value = task.herhaling;
+
+    document.getElementById("dayInput").value = task.dag;
+
+
+    document.getElementById("editTaskId").value = task.id;
+
+
+    document.getElementById("taskForm").style.display = "block";
+
+    document.getElementById("saveTaskButton").innerText = "Opslaan";
 }
 
 function updateDayTitle(day, open) {

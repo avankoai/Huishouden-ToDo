@@ -38,6 +38,8 @@
 
 <div id="taskForm" class="taskForm">
 
+<input type="hidden" id="editTaskId">
+
 <input id="taskInput" placeholder="Nieuwe taak...">
 
 <select id="personInput">
@@ -86,7 +88,7 @@
 
 </div>
 
-<button class="addTaskButton" onclick="addTask()">
+<button id="saveTaskButton" class="addTaskButton" onclick="addTask()">
     Toevoegen
 </button>
 
