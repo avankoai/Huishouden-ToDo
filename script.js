@@ -542,7 +542,7 @@ function updateDayTitle(day, open) {
 
     let dayName = day.charAt(0).toUpperCase() + day.slice(1);
 
-    let arrow = open ? "▼" : "▶";
+let arrow = open ? "⌄" : "›";
 
     let badge = "";
 
