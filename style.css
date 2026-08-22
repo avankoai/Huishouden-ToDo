@@ -323,7 +323,7 @@ button {
     margin-left: auto;
 
 }
-}
+
 
 @media (max-width: 600px) {
 
@@ -984,4 +984,12 @@ color: #9F3A38;
 
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 
+}
+
+}
+
+/* Verwijder blauwe klik-highlight op mobiele apparaten */
+
+* {
+    -webkit-tap-highlight-color: transparent;
 }
