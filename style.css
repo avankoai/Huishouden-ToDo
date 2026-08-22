@@ -729,11 +729,15 @@ color: #9F3A38;
         margin-top: 28px;
     }
 
-    .day {
-        margin-top: 16px;
-        padding: 8px;
-        border-radius: 16px;
-    }
+.day {
+
+    margin-top: 12px;
+
+    padding: 0;
+
+    border-radius: 10px;
+
+}
 
     /* Dagnamen */
     .day h2 {
@@ -945,5 +949,26 @@ color: #9F3A38;
     margin-top: 20px;
 
 }
+
+}
+
+/* Fix huidige dag styling */
+
+.today {
+
+    background-color: white;
+
+    border-left: none;
+
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+
+}
+
+
+.today h2 {
+
+    background-color: white;
+
+    border-left: none;
 
 }
