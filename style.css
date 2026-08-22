@@ -273,16 +273,6 @@ button {
 }
 
 
-
-.today h2 {
-
-    background-color: white;
-
-    border-left: none;
-
-}
-
-
 .completedTasks h3 {
 
     cursor: pointer;
@@ -544,15 +534,9 @@ box-shadow: 0 6px 16px rgba(0,0,0,0.18);
 
 .today h2 {
 
-    background-color: #eaf3f8;
+    background-color: white;
 
-    border-left: 5px solid #5d8aa8;
-
-    display: flex;
-
-    justify-content: space-between;
-
-    align-items: center;
+    border-left: none;
 
 }
 
