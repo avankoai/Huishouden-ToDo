@@ -2172,3 +2172,13 @@ box-shadow: none;
     background-color: rgba(39,174,96,0.2);
 
 }
+
+@media (max-width: 600px) {
+
+    .completedTasks h3 {
+
+        margin: 4px 0 10px 0;
+
+    }
+
+}
