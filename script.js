@@ -1,3 +1,5 @@
+console.log("SCRIPT IS GELADEN");
+
 const SUPABASE_URL = "https://sbppjnbilqhriyburalx.supabase.co";
 const SUPABASE_KEY = "sb_publishable_LTMhwEaoBcgn_DVnLbNmQA_3AVsrDDK";
 
@@ -113,16 +115,7 @@ if (editId) {
 
     tasks.push(task);
 
-    let days = getTaskDays(task);
-
-    days.forEach(function(day) {
-
-        createTask({
-            ...task,
-            dag: day
-        });
-
-    });
+    renderAllTasks();
 
 resetTaskForm();
 
@@ -133,6 +126,17 @@ document.getElementById("taskForm").style.display = "none";
 
 
 function createTask(task, location = "day") {
+
+    console.log(
+    "CREATE TASK:",
+    task.naam,
+    "ID:",
+    task.id,
+    "DAG:",
+    task.dag,
+    "LOCATIE:",
+    location
+);
 
     let li = document.createElement("li");
 
@@ -168,7 +172,10 @@ if (currentDayStatus === "afgerond") {
 
 checkbox.addEventListener("change", async function() {
 
-    let dayName = task.dag.toLowerCase();
+
+let dayName =
+    task.dag.charAt(0).toUpperCase() +
+    task.dag.slice(1);
 
     if (!task.dagStatus) {
         task.dagStatus = {};
@@ -223,15 +230,6 @@ checkbox.addEventListener("change", async function() {
 renderAllTasks();
 
 });
-
-
-    let index = tasks.findIndex(function(item) {
-        return item.naam === task.naam;
-    });
-
-    if (index !== -1) {
-        tasks[index] = task;
-    }
 
     localStorage.setItem("tasks", JSON.stringify(tasks));
 
@@ -595,20 +593,7 @@ async function loadTasks() {
 
     tasks = data.map(dbRowToTask);
 
-    tasks.forEach(function(task) {
-
-        let days = getTaskDays(task);
-
-        days.forEach(function(day) {
-
-            createTask({
-                ...task,
-                dag: day
-            });
-
-        });
-
-    });
+tasks = data.map(dbRowToTask);
 
     tasks.forEach(function(task) {
 
@@ -626,6 +611,8 @@ async function initializeApp() {
     await loadTasks();
 
     await checkWeeklyReset();
+
+    renderAllTasks();
 
     closeAllDays();
     highlightToday();
@@ -753,40 +740,22 @@ function updateCompletedCount(day) {
 
 function getOpenTaskCount(day) {
 
-    let count = 0;
+    let formattedDay =
+        day.charAt(0).toUpperCase() + day.slice(1);
 
 
-    tasks.forEach(function(task) {
+    return tasks.filter(function(task){
 
-
-        let taskDays = getTaskDays(task);
-
-
-        if (
-            taskDays.includes(
-                day.charAt(0).toUpperCase() + day.slice(1)
-            )
-        ) {
-
-
-            if (
+        return (
+            getTaskDays(task).includes(formattedDay)
+            &&
+            (
                 !task.dagStatus ||
-                task.dagStatus[
-                    day.charAt(0).toUpperCase() + day.slice(1)
-                ] !== "afgerond"
-            ) {
+                task.dagStatus[formattedDay] !== "afgerond"
+            )
+        );
 
-                count++;
-
-            }
-
-        }
-
-
-    });
-
-
-    return count;
+    }).length;
 
 }
 
@@ -1127,7 +1096,7 @@ function getCurrentWeek() {
 function loadTodayOverview() {
 
     let todayName = getTodayName();
-let todayCount = getOpenTaskCount(todayName.toLowerCase());
+let todayCount = getOpenTaskCount(todayName);
 
 let todayClass = "green";
 
@@ -1147,6 +1116,8 @@ if (todayCount > 5) {
 
     let container = document.getElementById("todayTasks");
 
+    container.innerHTML = "";
+
     let todayIndicator = document.getElementById("todayCount");
 
 if (todayIndicator) {
@@ -1156,9 +1127,6 @@ if (todayIndicator) {
     todayIndicator.innerText = todayCount;
 
 }
-
-    container.innerHTML = "";
-
 
     let foundTasks = [];
 
@@ -1244,6 +1212,10 @@ function renderAllTasks() {
     days.forEach(function(day) {
         updateCompletedCount(day);
     });
+
+    days.forEach(function(day) {
+    updateDayTitle(day, false);
+});
 
     // Vandaag opnieuw opbouwen
     loadTodayOverview();

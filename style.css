@@ -1192,14 +1192,36 @@ textarea {
 
     }
 
+    .taskView {
+    width:100%;
+}
 
-    .taskNote {
 
-        font-size: 15px;
+.taskNote {
 
-        line-height: 1.5;
+    width: calc(100% + 16px);
 
-    }
+    margin-top: 10px;
+
+    margin-left: -16px;
+
+    padding-top: 10px;
+
+    padding-left: 16px;
+
+    border-top: 1px solid #ddd;
+
+    font-size: 13px;
+
+    color: #666;
+
+    font-style: italic;
+
+    line-height: 1.5;
+
+    box-sizing: border-box;
+
+}
 
 
     /* Afgeronde taken */
@@ -1787,7 +1809,7 @@ margin-left:auto;
 
     border-left-style: solid;
 
-    overflow: hidden;
+    overflow: visible;
 
 }
 
@@ -1859,7 +1881,11 @@ margin-left:auto;
 
 #todayTasks .taskNote {
 
+    width: calc(100% + 74px);
+
     margin-top: 12px;
+
+    margin-left: 0;
 
     padding-top: 10px;
 
@@ -1870,6 +1896,10 @@ margin-left:auto;
     font-style: italic;
 
     color: #666;
+
+    line-height: 1.5;
+
+    box-sizing: border-box;
 
 }
 
@@ -2067,5 +2097,15 @@ margin-left:auto;
         right: 8px;
         top: 12px;
     }
+
+}
+
+.day .taskNote {
+
+    width: calc(100% + 28px);
+
+    margin-left: -14px;
+
+    padding-left: 14px;
 
 }
