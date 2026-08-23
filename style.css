@@ -196,17 +196,19 @@ textarea {
 
 .day {
 
-    margin-top: 12px;
+margin-top: 12px;   
 
-    background-color: white;
+margin-bottom: 35px;
 
-    border-radius: 12px;
+background-color: transparent;
 
-    box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+border-radius: 0;
 
-    overflow: hidden;
+box-shadow: none;
 
-    border-left: none;
+overflow: visible;
+
+border-left: none;
 
 }
 
@@ -305,16 +307,15 @@ textarea {
 
     background-color: white;
 
-    padding: 12px 40px 12px 14px;
+    padding: 16px 40px 16px 16px;
 
-    margin-top: 12px;
+    margin-top: 14px;
 
-    border-radius: 8px;
+    border-radius: 0px;
 
-    box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
 
     border-left-width: 5px;
-
 }
 
 
@@ -406,13 +407,25 @@ textarea {
 
     cursor: pointer;
 
-    font-size: 14px;
+    background-color: rgba(63,95,107,0.08);
 
-    font-weight: 600;
+    border-radius: 10px;
 
-    color: #8a8a8a;
+    padding: 12px 16px;
 
-    margin: 12px 16px;
+    margin: 18px 0 10px 0;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    color: #3f5f6b;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
 
 }
 
@@ -448,26 +461,34 @@ textarea {
 
 .personName {
 
-    font-weight: 600;
+font-weight: 700;
 
-    color: #555;
+color: #555;
+
+background-color: #eef3f6;
+
+padding: 5px 10px;
+
+border-radius: 4px;
+
+font-size: 13px;
 
 }
 
 
 .importantLabel {
 
-    padding: 5px 10px;
+padding: 5px 10px;
 
-    border-radius: 20px;
+border-radius: 4px;
 
-    font-size: 13px;
+font-size: 13px;
 
-    background-color: #F6D8D6;
+background-color: #F6D8D6;
 
-    color: #9F3A38;
+color: #9F3A38;
 
-    font-weight: bold;
+font-weight: 700;
 
 }
 
@@ -501,11 +522,11 @@ textarea {
 
 .today {
 
-    background-color: white;
+    background-color: transparent;
 
     border-left: none;
 
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    box-shadow: none;
 
 }
 
@@ -521,11 +542,11 @@ textarea {
 
 .day.today {
 
-    background-color: rgba(255,255,255,0.95);
+    background-color: transparent;
 
     border-left: none;
 
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    box-shadow: none;
 
 }
 
@@ -1675,6 +1696,8 @@ DAG TITEL UITLIJNING
 
     width: 100%;
 
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+
 }
 
 
@@ -1797,13 +1820,13 @@ margin-left:auto;
 
     background-color: white;
 
-    border-radius: 14px;
+    border-radius: 0px;
 
     padding: 16px 90px 16px 16px;
 
     margin-top: 14px;
 
-    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+    box-shadow: 0 3px 12px rgba(0,0,0,0.10);
 
     border-left-width: 6px;
 
@@ -2107,5 +2130,28 @@ margin-left:auto;
     margin-left: -14px;
 
     padding-left: 14px;
+
+}
+
+.todayOverview {
+
+background-color: transparent;
+
+border-radius: 0;
+
+padding: 0;
+
+margin-bottom: 25px;
+
+box-shadow: none;
+
+}
+
+.editButton,
+.deleteButton {
+
+    width: 26px;
+
+    height: 26px;
 
 }
