@@ -2155,3 +2155,17 @@ box-shadow: none;
     height: 26px;
 
 }
+
+.completedCount {
+
+    background-color: #27AE60;
+
+    font-size: 16px;
+
+}
+
+.day.completedDay h2 {
+
+    background-color: rgba(39,174,96,0.08);
+
+}

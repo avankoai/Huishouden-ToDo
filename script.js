@@ -759,6 +759,34 @@ function getOpenTaskCount(day) {
 
 }
 
+function isDayCompleted(day) {
+
+    let formattedDay =
+        day.charAt(0).toUpperCase() + day.slice(1);
+
+    let dayTasks = tasks.filter(function(task) {
+
+        return getTaskDays(task).includes(formattedDay);
+
+    });
+
+
+    if (dayTasks.length === 0) {
+        return false;
+    }
+
+
+    return dayTasks.every(function(task) {
+
+        return (
+            task.dagStatus &&
+            task.dagStatus[formattedDay] === "afgerond"
+        );
+
+    });
+
+}
+
 function toggleDay(day) {
 
     let content = document.getElementById(day + "-content");
@@ -894,26 +922,41 @@ function updateDayTitle(day, open) {
     }
 
 
-    let count = getOpenTaskCount(day);
+let count = getOpenTaskCount(day);
 
+let completed = isDayCompleted(day);
 
 let taskCount = "";
 
 let countClass = "green";
 
 
-if (count > 5) {
+if (completed) {
 
-    countClass = "red";
+    taskCount = `
+    <span class="taskCount completedCount">
+        ✓
+    </span>
 
-} else if (count > 0) {
+    <span class="dayArrow">
+        ⌄
+    </span>
+    `;
 
-    countClass = "orange";
+} else {
 
-}
+    if (count > 5) {
+
+        countClass = "red";
+
+    } else if (count > 0) {
+
+        countClass = "orange";
+
+    }
 
 
-taskCount = `
+    taskCount = `
     <span class="taskCount ${countClass}">
         ${count}
     </span>
@@ -921,8 +964,19 @@ taskCount = `
     <span class="dayArrow">
         ⌄
     </span>
-`;
+    `;
 
+}
+
+if (completed) {
+
+    title.parentElement.classList.add("completedDay");
+
+} else {
+
+    title.parentElement.classList.remove("completedDay");
+
+}
 
 title.innerHTML = `
 
@@ -1122,9 +1176,19 @@ if (todayCount > 5) {
 
 if (todayIndicator) {
 
-    todayIndicator.className = "taskCount " + todayClass;
+    let todayCompleted = isDayCompleted(todayName);
 
-    todayIndicator.innerText = todayCount;
+    if (todayCompleted) {
+
+        todayIndicator.className = "taskCount completedCount";
+        todayIndicator.innerText = "✓";
+
+    } else {
+
+        todayIndicator.className = "taskCount " + todayClass;
+        todayIndicator.innerText = todayCount;
+
+    }
 
 }
 
