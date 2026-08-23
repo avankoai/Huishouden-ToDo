@@ -196,9 +196,9 @@ textarea {
 
 .day {
 
-margin-top: 12px;   
+margin-top: 0px;   
 
-margin-bottom: 35px;
+margin-bottom: 12px;
 
 background-color: transparent;
 
@@ -413,7 +413,7 @@ border-left: none;
 
     padding: 12px 16px;
 
-    margin: 18px 0 10px 0;
+    margin: 10px 0 10px 0;
 
     font-size: 15px;
 
@@ -1156,7 +1156,7 @@ font-weight: 700;
 
     .day {
 
-        margin-top: 12px;
+        margin-top: 0px;
 
         padding: 0;
 
@@ -1182,7 +1182,7 @@ font-weight: 700;
 
         padding: 16px 42px 16px 16px;
 
-        margin-top: 12px;
+        margin-top: 4px;
 
     }
 
@@ -2166,6 +2166,6 @@ box-shadow: none;
 
 .day.completedDay h2 {
 
-    background-color: rgba(39,174,96,0.08);
+    background-color: rgba(39,174,96,0.2);
 
 }
