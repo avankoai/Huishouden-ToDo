@@ -21,7 +21,8 @@ function dbRowToTask(row) {
         dag: row.dag,
         herhaling: row.herhaling,
         notitie: row.notitie || "",
-        dagStatus: row.dag_status || {}
+        dagStatus: row.dag_status || {},
+        type: row.type || "gepland"
     };
 }
 
@@ -33,7 +34,8 @@ function taskToDb(task) {
         dag: task.dag,
         herhaling: task.herhaling,
         notitie: task.notitie,
-        dag_status: task.dagStatus || {}
+        dag_status: task.dagStatus || {},
+        type: task.type || "gepland"
     };
 }
 
@@ -48,29 +50,36 @@ async function addTask() {
     let note = document.getElementById("noteInput").value;
     let day = document.getElementById("dayInput").value;
     let repeat = document.getElementById("repeatInput").value;
+    let taskType = document.getElementById("taskTypeInput").value;
 
-    if (day === "Vandaag") {
+if (taskType === "los") {
 
-        day = getTodayName();
+    day = null;
+    repeat = "geen";
 
-        day =
-            day.charAt(0).toUpperCase() +
-            day.slice(1);
-    }
+} else if (day === "Vandaag") {
+
+    day = getTodayName();
+
+    day =
+        day.charAt(0).toUpperCase() +
+        day.slice(1);
+}
 
     if (taskText === "") {
         return;
     }
 
-    let newTask = {
-        naam: taskText,
-        persoon: person,
-        belangrijk: important,
-        dag: day,
-        herhaling: repeat,
-        notitie: note,
-        dagStatus: {}
-    };
+let newTask = {
+    naam: taskText,
+    persoon: person,
+    belangrijk: important,
+    dag: day,
+    herhaling: repeat,
+    notitie: note,
+    dagStatus: {},
+    type: taskType
+};
 
 let data;
 let error;
@@ -151,15 +160,22 @@ function createTask(task, location = "day") {
     let checkbox = document.createElement("input");
     checkbox.type = "checkbox";
 
-let currentDayStatus = "open";
+let statusKey;
 
-
-if (task.dagStatus && task.dagStatus[task.dag]) {
-
-    currentDayStatus = task.dagStatus[task.dag];
-
+if (task.type === "los") {
+    statusKey = "los";
+} else {
+    statusKey = task.dag;
 }
 
+
+let currentDayStatus = "open";
+
+if (task.dagStatus && task.dagStatus[statusKey]) {
+
+    currentDayStatus = task.dagStatus[statusKey];
+
+}
 
 if (currentDayStatus === "afgerond") {
 
@@ -173,23 +189,19 @@ if (currentDayStatus === "afgerond") {
 checkbox.addEventListener("change", async function() {
 
 
-let dayName =
-    task.dag.charAt(0).toUpperCase() +
-    task.dag.slice(1);
-
     if (!task.dagStatus) {
         task.dagStatus = {};
     }
 
-    if (checkbox.checked) {
+if (checkbox.checked) {
 
-        task.dagStatus[task.dag] = "afgerond";
+    task.dagStatus[statusKey] = "afgerond";
 
-    } else {
+} else {
 
-        task.dagStatus[task.dag] = "open";
+    task.dagStatus[statusKey] = "open";
 
-    }
+}
 
 
     // Ook het originele task-object in de tasks-array bijwerken
@@ -197,12 +209,14 @@ let dayName =
         return item.id === task.id;
     });
 
-    if (originalTask) {
-        originalTask.dagStatus = {
-            ...originalTask.dagStatus,
-            [task.dag]: task.dagStatus[task.dag]
-        };
-    }
+if (originalTask) {
+
+    originalTask.dagStatus = {
+        ...originalTask.dagStatus,
+        [statusKey]: task.dagStatus[statusKey]
+    };
+
+}
 
 
     // Nieuwe status naar Supabase sturen
@@ -425,23 +439,25 @@ let saveInlineButton = editForm.querySelector(".saveInlineEdit");
 saveInlineButton.addEventListener("click", async function() {
 
 
-    let updatedTask = {
+let updatedTask = {
 
-        naam: editForm.querySelector(".editName").value,
+    naam: editForm.querySelector(".editName").value,
 
-        persoon: editForm.querySelector(".editPerson").value,
+    persoon: editForm.querySelector(".editPerson").value,
 
-        notitie: editForm.querySelector(".editNote").value,
+    notitie: editForm.querySelector(".editNote").value,
 
-        belangrijk: editForm.querySelector(".editImportantCheckbox").checked,
+    belangrijk: editForm.querySelector(".editImportantCheckbox").checked,
 
-        herhaling: editForm.querySelector(".editRepeat").value,
+    herhaling: editForm.querySelector(".editRepeat").value,
 
-        dag: editForm.querySelector(".editDay").value,
+    dag: editForm.querySelector(".editDay").value,
 
-        dagStatus: task.dagStatus || {}
+    dagStatus: task.dagStatus || {},
 
-    };
+    type: task.type || "gepland"
+
+};
 
 
     const { error } = await supabaseClient
@@ -549,7 +565,7 @@ li.appendChild(editForm);
 
 
     // Naar juiste dag sturen
-let dayName = task.dag.toLowerCase();
+// Naar juiste plek sturen
 
 if (location === "today") {
 
@@ -558,21 +574,50 @@ if (location === "today") {
         .appendChild(li);
 
 }
-else if (
-    task.dagStatus &&
-    task.dagStatus[task.dag] === "afgerond"
-) {
 
-    document
-        .getElementById(dayName + "-done")
-        .appendChild(li);
+else if (location === "losse") {
+
+    if (
+        task.dagStatus &&
+        task.dagStatus["los"] === "afgerond"
+    ) {
+
+        document
+            .getElementById("losse-done")
+            .appendChild(li);
+
+    } else {
+
+        document
+            .getElementById("losse-open")
+            .appendChild(li);
+
+    }
 
 }
+
 else {
 
-    document
-        .getElementById(dayName + "-open")
-        .appendChild(li);
+    let dayName = task.dag.toLowerCase();
+
+    if (
+        task.dagStatus &&
+        task.dagStatus[task.dag] === "afgerond"
+    ) {
+
+        document
+            .getElementById(dayName + "-done")
+            .appendChild(li);
+
+    }
+
+    else {
+
+        document
+            .getElementById(dayName + "-open")
+            .appendChild(li);
+
+    }
 
 }
 
@@ -738,6 +783,56 @@ function updateCompletedCount(day) {
 
 }
 
+function updateLooseTaskCount() {
+
+    let looseTasks = tasks.filter(function(task) {
+        return task.type === "los";
+    });
+
+    let openLooseTasks = looseTasks.filter(function(task) {
+        return (
+            !task.dagStatus ||
+            task.dagStatus["los"] !== "afgerond"
+        );
+    });
+
+    let indicator = document.getElementById("looseTaskCount");
+
+    if (!indicator) {
+        return;
+    }
+
+    // Er bestaan losse taken en ze zijn allemaal afgerond
+if (looseTasks.length > 0 && openLooseTasks.length === 0) {
+
+    indicator.className = "taskCount completedCount";
+    indicator.innerText = "✓";
+
+    document
+        .querySelector(".looseTasksSection")
+        .classList.add("completedLooseTasks");
+
+    return;
+}
+
+document
+    .querySelector(".looseTasksSection")
+    .classList.remove("completedLooseTasks");
+
+    let count = openLooseTasks.length;
+
+    let countClass = "green";
+
+    if (count > 5) {
+        countClass = "red";
+    } else if (count > 0) {
+        countClass = "orange";
+    }
+
+    indicator.className = "taskCount " + countClass;
+    indicator.innerText = count;
+}
+
 function getOpenTaskCount(day) {
 
     let formattedDay =
@@ -802,6 +897,22 @@ function toggleDay(day) {
         content.style.display = "none";
 
         updateDayTitle(day, false);
+
+    }
+
+}
+
+function toggleLooseTasks() {
+
+    let content = document.getElementById("losse-content");
+
+    if (content.style.display === "none") {
+
+        content.style.display = "block";
+
+    } else {
+
+        content.style.display = "none";
 
     }
 
@@ -1017,6 +1128,25 @@ function getTodayName() {
 
 }
 
+let taskTypeInput = document.getElementById("taskTypeInput");
+let repeatContainer = document.getElementById("repeatContainer");
+
+taskTypeInput.addEventListener("change", function() {
+
+    if (taskTypeInput.value === "los") {
+
+        repeatContainer.style.display = "none";
+        dayContainer.style.display = "none";
+
+    } else {
+
+        repeatContainer.style.display = "block";
+        dayContainer.style.display = "block";
+
+    }
+
+});
+
 let repeatInput = document.getElementById("repeatInput");
 let dayContainer = document.getElementById("dayContainer");
 
@@ -1036,7 +1166,55 @@ repeatInput.addEventListener("change", function() {
 
 });
 
+const looseTaskTypeSelect = document.getElementById("taskTypeInput");
+const looseRepeatContainer = document.getElementById("repeatContainer");
+
+if (looseTaskTypeSelect && looseRepeatContainer) {
+
+    looseTaskTypeSelect.addEventListener("change", function() {
+
+        if (looseTaskTypeSelect.value === "los") {
+
+            looseRepeatContainer.style.display = "none";
+            dayContainer.style.display = "none";
+
+        } else {
+
+            looseRepeatContainer.style.display = "block";
+
+            if (repeatInput.value === "dagelijks") {
+                dayContainer.style.display = "none";
+            } else {
+                dayContainer.style.display = "block";
+            }
+
+        }
+
+    });
+
+}
+
+// Herhaling wijzigen bij geplande taak
+repeatInput.addEventListener("change", function() {
+
+    if (repeatInput.value === "dagelijks") {
+
+        dayContainer.style.display = "none";
+
+    } else {
+
+        dayContainer.style.display = "block";
+
+    }
+
+});
+
 function getTaskDays(task) {
+
+    // Losse taken horen niet bij een weekdag
+    if (task.type === "los") {
+        return [];
+    }
 
     if (task.herhaling === "dagelijks") {
 
@@ -1052,7 +1230,6 @@ function getTaskDays(task) {
 
     }
 
-
     if (task.herhaling === "wekelijks") {
 
         return [
@@ -1061,11 +1238,9 @@ function getTaskDays(task) {
 
     }
 
-
     return [
         task.dag
     ];
-
 }
 
 async function resetRecurringTasks() {
@@ -1256,28 +1431,44 @@ function renderAllTasks() {
 
     });
 
+    document.getElementById("losse-open").innerHTML = "";
+    document.getElementById("losse-done").innerHTML = "";
+
     // Taken opnieuw in de week zetten
-    tasks.forEach(function(task) {
+tasks.forEach(function(task) {
 
-        let taskDays = getTaskDays(task);
+    // Losse taak
+    if (task.type === "los") {
 
-        taskDays.forEach(function(day) {
+        createTask(task, "losse");
 
-            createTask({
-                ...task,
-                dag: day
-            });
+        return;
+    }
 
+
+    // Normale geplande taak
+    let taskDays = getTaskDays(task);
+
+    taskDays.forEach(function(day) {
+
+        createTask({
+            ...task,
+            dag: day
         });
 
     });
+
+});
 
     // Afgerond-tellers opnieuw berekenen
     days.forEach(function(day) {
         updateCompletedCount(day);
     });
 
-    days.forEach(function(day) {
+updateCompletedCount("losse");
+updateLooseTaskCount();
+
+days.forEach(function(day) {
     updateDayTitle(day, false);
 });
 

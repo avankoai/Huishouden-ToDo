@@ -2182,3 +2182,102 @@ box-shadow: none;
     }
 
 }
+
+/* =========================
+LOSSE TAKEN
+========================= */
+
+.looseTasksSection {
+    margin-bottom: 12px;
+    background-color: transparent;
+}
+
+.looseTasksTitle {
+    display: flex;
+    align-items: center;
+
+    width: 100%;
+
+    margin: 0;
+    padding: 18px 20px;
+
+    background-color: white;
+
+    color: #3f5f6b;
+
+    font-size: 22px;
+    font-weight: 700;
+
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+
+    box-sizing: border-box;
+
+    cursor: pointer;
+    user-select: none;
+}
+
+.looseTasksSection ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.looseTasksSection li {
+    position: relative;
+
+    background-color: white;
+
+    padding: 16px 40px 16px 16px;
+
+    margin-top: 12px;
+
+    border-radius: 0;
+
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+
+    border-left-width: 5px;
+    border-left-style: solid;
+}
+
+.looseTasksSection .completedTasks h3 {
+    cursor: pointer;
+
+    background-color: rgba(63,95,107,0.08);
+
+    border-radius: 10px;
+
+    padding: 10px 14px;
+    margin: 10px 0 0 0;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    color: #3f5f6b;
+}
+
+@media (max-width: 600px) {
+
+    .looseTasksSection {
+        margin-top: 12px;
+    }
+
+    .looseTasksTitle {
+        font-size: 21px;
+        padding: 14px 16px;
+    }
+
+    .looseTasksSection li {
+        padding: 16px 42px 16px 16px;
+        margin-top: 10px;
+    }
+
+    .looseTasksSection .completedTasks h3 {
+        font-size: 16px;
+        padding: 8px 10px;
+        margin-top: 8px;
+    }
+}
+
+.looseTasksSection.completedLooseTasks .looseTasksTitle {
+    background-color: rgba(39,174,96,0.2);
+}

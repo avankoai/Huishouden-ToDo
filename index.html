@@ -67,6 +67,10 @@
 
 <textarea id="noteInput" placeholder="Notitie of instructies..."></textarea>
 
+<select id="taskTypeInput">
+    <option value="gepland">Geplande taak</option>
+    <option value="los">Losse taak</option>
+</select>
 
 <div class="importantOption">
 
@@ -77,13 +81,17 @@
 
 </div>
 
-<select id="repeatInput">
+<div id="repeatContainer">
 
-<option value="eenmalig">Eenmalig</option>
-<option value="dagelijks">Dagelijks</option>
-<option value="wekelijks">Wekelijks</option>
+    <select id="repeatInput">
 
-</select>
+        <option value="eenmalig">Eenmalig</option>
+        <option value="dagelijks">Dagelijks</option>
+        <option value="wekelijks">Wekelijks</option>
+
+    </select>
+
+</div>
 
 <div id="dayContainer">
     
@@ -321,6 +329,50 @@
 </section>
 
 </div>
+
+<section class="looseTasksSection">
+
+<h2 class="looseTasksTitle" onclick="toggleLooseTasks()">
+
+    <span class="dayLeft">
+        <span class="dayName">
+            Losse taken
+        </span>
+    </span>
+
+    <span class="dayRight">
+
+        <span id="looseTaskCount" class="taskCount green">
+            0
+        </span>
+
+        <span class="dayArrow">
+            ⌄
+        </span>
+
+    </span>
+
+</h2>
+
+    <div id="losse-content">
+
+        <div class="openTasks">
+            <ul id="losse-open"></ul>
+        </div>
+
+        <div class="completedTasks">
+
+            <h3 id="losse-done-title" onclick="toggleCompleted('losse')">
+                ▶ Afgerond (0)
+            </h3>
+
+            <ul id="losse-done" style="display:none;"></ul>
+
+        </div>
+
+    </div>
+
+</section>
 
 <div id="deleteModal" class="modal">
 
