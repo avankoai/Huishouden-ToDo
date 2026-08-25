@@ -1278,22 +1278,63 @@ async function resetRecurringTasks() {
 
 async function checkWeeklyReset() {
 
-    let lastReset = localStorage.getItem("lastReset");
     let currentWeek = getCurrentWeek();
 
-    if (!lastReset) {
-        localStorage.setItem("lastReset", currentWeek);
+    const { data, error } = await supabaseClient
+        .from("app_settings")
+        .select("value")
+        .eq("id", "last_weekly_reset")
+        .single();
+
+    if (error) {
+        console.error(
+            "Laatste weekreset ophalen mislukt:",
+            error
+        );
         return;
     }
 
+    let lastReset = data.value;
+
+    // Eerste keer: huidige week registreren,
+    // zonder taken te resetten
+    if (!lastReset) {
+
+        const { error: updateError } = await supabaseClient
+            .from("app_settings")
+            .update({
+                value: currentWeek
+            })
+            .eq("id", "last_weekly_reset");
+
+        if (updateError) {
+            console.error(
+                "Eerste weekreset registreren mislukt:",
+                updateError
+            );
+        }
+
+        return;
+    }
+
+    // Nieuwe week gevonden
     if (lastReset !== currentWeek) {
 
         await resetRecurringTasks();
 
-        localStorage.setItem(
-            "lastReset",
-            currentWeek
-        );
+        const { error: updateError } = await supabaseClient
+            .from("app_settings")
+            .update({
+                value: currentWeek
+            })
+            .eq("id", "last_weekly_reset");
+
+        if (updateError) {
+            console.error(
+                "Weekreset registreren mislukt:",
+                updateError
+            );
+        }
     }
 }
 
@@ -1301,25 +1342,29 @@ function getCurrentWeek() {
 
     let date = new Date();
 
-    let firstDay = new Date(
-        date.getFullYear(),
-        0,
-        1
+    // JS: zondag = 0, maandag = 1, ... zaterdag = 6
+    let day = date.getDay();
+
+    // Hoeveel dagen terug naar maandag?
+    let daysSinceMonday = day === 0 ? 6 : day - 1;
+
+    let monday = new Date(date);
+
+    monday.setDate(
+        date.getDate() - daysSinceMonday
     );
 
+    let year = monday.getFullYear();
 
-    let days = Math.floor(
-        (date - firstDay) / 86400000
-    );
+    let month = String(
+        monday.getMonth() + 1
+    ).padStart(2, "0");
 
+    let dayOfMonth = String(
+        monday.getDate()
+    ).padStart(2, "0");
 
-    let week = Math.ceil(
-        (days + firstDay.getDay() + 1) / 7
-    );
-
-
-    return date.getFullYear() + "-" + week;
-
+    return year + "-" + month + "-" + dayOfMonth;
 }
 
 function loadTodayOverview() {
