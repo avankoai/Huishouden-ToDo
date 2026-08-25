@@ -1441,6 +1441,14 @@ if (
 
     }
 
+foundTasks.sort(function(a, b) {
+
+    if (a.belangrijk === b.belangrijk) {
+        return 0;
+    }
+
+    return a.belangrijk ? -1 : 1;
+});
 
 foundTasks.forEach(function(task) {
 
@@ -1479,8 +1487,20 @@ function renderAllTasks() {
     document.getElementById("losse-open").innerHTML = "";
     document.getElementById("losse-done").innerHTML = "";
 
-    // Taken opnieuw in de week zetten
-tasks.forEach(function(task) {
+// Taken sorteren:
+// belangrijke taken eerst, normale taken daarna
+let sortedTasks = [...tasks].sort(function(a, b) {
+
+    if (a.belangrijk === b.belangrijk) {
+        return 0;
+    }
+
+    return a.belangrijk ? -1 : 1;
+});
+
+
+// Taken opnieuw in de week zetten
+sortedTasks.forEach(function(task) {
 
     // Losse taak
     if (task.type === "los") {
@@ -1489,7 +1509,6 @@ tasks.forEach(function(task) {
 
         return;
     }
-
 
     // Normale geplande taak
     let taskDays = getTaskDays(task);
